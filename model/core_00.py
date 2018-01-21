@@ -2,6 +2,16 @@
 import math
 
 
+# 定义算法信息
+def modinfo_00():
+    mod_name = '测试模块'
+    mod_imageurl = '../static/image/test.jpg'
+    mod_info = '该模块用于新增算法的调试，调试完成后会更新到对应链接。'
+    mod_desp = '该模块用于新增算法的调试，调试完成后会更新到对应链接。'
+
+    return [mod_name, mod_imageurl, mod_info, mod_desp]
+
+
 # 定义输入变量，生成结构体.
 def modx_00():
     modvar_type = ['基本参数', '粒径分布']

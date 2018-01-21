@@ -22,7 +22,7 @@
         {% endfor %}
         </div>
     {% endfor %}
-    <form action="/download" method="GET">
+    <form action="/download/{{ fn }}" method="GET">
     <center><button type="submit" class="btn btn-primary" style="width:3cm">生成计算书</button></center>
 	</form>
 {% endblock %}

@@ -1,5 +1,6 @@
 def export_docx(y):
     from docx import Document
+    import time
 
     rows = len(y[1])
     document = Document()
@@ -25,8 +26,10 @@ def export_docx(y):
         i += 1
 
     document.add_page_break()
-
-    document.save('static/results/demo.docx')
+    trick = int(time.time()).__str__()
+    fn = 'result'+trick+'.docx'
+    document.save('static/results/'+fn)
+    return fn
 
 
 # 字典拆分成变量
