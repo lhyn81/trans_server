@@ -1,0 +1,27 @@
+{% extends "default.html" %}
+{% block lh %}
+    <h4 class="text-center">计算结果</h4>
+    {% for modtype in var[0] %}
+    <div class="alert alert-dark">
+      <strong>{{ modtype }}</strong>
+    </div>
+        <div  style="margin-bottom: 10px;margin-left: 10px" >
+        {% for moddata in var[1] %}
+            <table>
+                {% if moddata['type']==modtype %}
+                <tbody>
+                <tr>
+                <td style="width:8cm">{{ moddata['text'] }}</td>
+                <td style="width:3cm">{{ moddata['value'] }}</td>
+                <td style="width:3cm">{{ moddata['unit'] }}</td>
+                <td style="width:8cm">{{ moddata['memo'] }}</td>
+                </tr>
+                </tbody>
+                {% endif %}
+            </table>
+        {% endfor %}
+        </div>
+    {% endfor %}
+    <center><button type="submit" class="btn btn-primary" style="width:3cm">生成计算书</button></center>
+	</form>
+{% endblock %}

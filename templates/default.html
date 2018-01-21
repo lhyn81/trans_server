@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="LH1981">
+
+    <title>热机小助手</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../static/css/simple-sidebar.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="/">热机小助手</a>
+                </li>
+                <li style="text-indent: 20px"><a href="#" data-toggle="collapse" data-target="#mod_common" >通用模型库</a></li>
+                    <div id="mod_common" class="collapse">
+                        <li><a href="/show/01">旋风分离器</a></li>
+                        <li><a href="#">模块B</a></li>
+                    </div>
+                <li style="text-indent: 20px"><a href="#" data-toggle="collapse" data-target="#mod_coal" >火电模型库</a></li>
+                    <div id="mod_coal" class="collapse">
+                        <li><a href="#">模块A</a></li>
+                        <li><a href="#">模块B</a></li>
+                    </div>
+                <li style="text-indent: 20px"><a href="#" data-toggle="collapse" data-target="#mod_biomass" >生物质模型库</a></li>
+                    <div id="mod_biomass" class="collapse">
+                        <li><a href="#">模块A</a></li>
+                        <li><a href="#">模块B</a></li>
+                    </div>
+                <li style="text-indent: 20px"><a href="#" data-toggle="collapse" data-target="#mod_env" >环保模型库</a></li>
+                    <div id="mod_env" class="collapse">
+                        <li><a href="#">模块A</a></li>
+                        <li><a href="#">模块B</a></li>
+                    </div>
+                <li style="text-indent: 20px"><a href="#" data-toggle="collapse" data-target="#mod_proj" >项目模板库</a></li>
+                    <div id="mod_proj" class="collapse">
+                        <li><a href="#">模块A</a></li>
+                        <li><a href="#">模块B</a></li>
+                    </div>
+                <li style="text-indent: 20px"><a href="#" data-toggle="collapse" data-target="#mod_test" >测试区</a></li>
+                    <div id="mod_test" class="collapse">
+                        <li><a href="/show/00">TEST</a></li>
+                    </div>
+            </ul>
+        </div>
+
+        <div id="page-content-wrapper">
+            <div>
+                <a href="#menu-toggle" class="btn btn-secondary btn-sm" id="menu-toggle" style="margin-left: 20px">模型目录</a>
+                <hr>
+            </div>
+            <div style="margin-top: 30px" class="container-fluid">
+            {% block lh %}
+            {% endblock %}
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="../static/vendor/jquery/jquery.min.js"></script>
+    <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+
+</body>
+
+</html>
