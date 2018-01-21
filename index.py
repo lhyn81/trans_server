@@ -25,10 +25,12 @@ def do(mod_name):
     if mod_name == '00':
         x = request.form.to_dict()
         y = mody_00(x)
+        export_docx(y)
         return render_template("do.html", var=y)
     if mod_name == '01':
         x = request.form.to_dict()
         y = mody_01(x)
+        export_docx(y)
         return render_template("do.html", var=y)
 
 
