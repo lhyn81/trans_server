@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, send_file
 from model.core_00 import modinfo_00, modx_00, mody_00
 from model.core_01 import modinfo_01, modx_01, mody_01
+from model.core_02 import modinfo_02, modx_02, mody_02
 from model.utils import export_docx
 
 
@@ -18,6 +19,8 @@ def show(mod_name):
         return render_template("show.html", info=modinfo_00(), var=modx_00(), mod_name=mod_name)
     if mod_name == '01':
         return render_template("show.html", info=modinfo_01(), var=modx_01(), mod_name=mod_name)
+    if mod_name == '02':
+        return render_template("show.html", info=modinfo_02(), var=modx_02(), mod_name=mod_name)
 
 
 @app.route('/do/<mod_name>', methods=['POST'])
@@ -31,6 +34,11 @@ def do(mod_name):
     if mod_name == '01':
         x = request.form.to_dict()
         y = mody_01(x)
+        fn = export_docx(y)
+        return render_template("do.html", var=y, fn=fn)
+    if mod_name == '02':
+        x = request.form.to_dict()
+        y = mody_02(x)
         fn = export_docx(y)
         return render_template("do.html", var=y, fn=fn)
 
