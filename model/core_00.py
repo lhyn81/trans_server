@@ -1,39 +1,25 @@
 # CYCLONE
 import math
+from iapws import IAPWS97
 
 
 # 定义算法信息
 def modinfo_00():
     mod_name = '测试模块'
-    mod_imageurl = '../static/image/test.jpg'
+    mod_imageurl = '../static/image/iapws97.png'
     mod_info = '该模块用于新增算法的调试，调试完成后会更新到对应链接。'
-    mod_desp = '该模块用于新增算法的调试，调试完成后会更新到对应链接。'
+    mod_desp = "该模块为IAPWS97水蒸气计算模块。可以输入以下参数组合：温度+干度; 压力+干度;  温度+压力;"
 
     return [mod_name, mod_imageurl, mod_info, mod_desp]
 
 
 # 定义输入变量，生成结构体.
 def modx_00():
-    modvar_type = ['基本参数', '粒径分布']
+    modvar_type = ['基本参数']
     modvar_data = [
-        {'id': 'q0', 'type': '基本参数', 'text':'标准状况下的体积流量', 'value': '', 'unit': 'Nm3/h', 'memo': '可尝试50000'},
-        {'id': 't', 'type': '基本参数', 'text':'入口设定温度', 'value': '', 'unit': '℃', 'memo': '可尝试350'},
-        {'id': 'vi', 'type': '基本参数', 'text':'旋风分离器入口气速', 'value': '', 'unit': 'm/s', 'memo': '一般可取入口速度为15~35m/s'},
-        {'id': 'den_g', 'type': '基本参数', 'text':'标况下气体密度', 'value': '1.34', 'unit': 'kg/Nm3', 'memo': '通常取1.34'},
-        {'id': 'mu', 'type': '基本参数', 'text': '工作温度下气体黏度', 'value': '', 'unit': 'kg/(m▪s)', 'memo': '可尝试3e-5'},
-        {'id': 'den_p', 'type': '基本参数', 'text': '工作温度下固体密度', 'value': '', 'unit': 'kg/m3', 'memo': '可尝试2500'},
-        {'id': 'Nc', 'type': '基本参数', 'text': '旋转回数', 'value': '', 'unit': '-', 'memo': '按入口气体速度选取，可尝试4'},
-        {'id': 'n', 'type': '基本参数', 'text': '速度分布指数 ', 'value': '', 'unit': '-', 'memo': '根据计算模型选取，可尝试0.5'},
-        {'id': 'dp1', 'type': '粒径分布', 'text': '#1平均粒径', 'value': '', 'unit': 'mm', 'memo': '#1平均粒径'},
-        {'id': 'dp1_r', 'type': '粒径分布', 'text': '#1平均粒径质量分数 ', 'value': '', 'unit': '-', 'memo': '取0~1'},
-        {'id': 'dp2', 'type': '粒径分布', 'text': '#2平均粒径', 'value': '', 'unit': 'mm', 'memo': '#2平均粒径'},
-        {'id': 'dp2_r', 'type': '粒径分布', 'text': '#2平均粒径质量分数 ', 'value': '', 'unit': '-', 'memo': '取0~1'},
-        {'id': 'dp3', 'type': '粒径分布', 'text': '#3平均粒径', 'value': '', 'unit': 'mm', 'memo': '#3平均粒径'},
-        {'id': 'dp3_r', 'type': '粒径分布', 'text': '#3平均粒径质量分数 ', 'value': '', 'unit': '-', 'memo': '取0~1'},
-        {'id': 'dp4', 'type': '粒径分布', 'text': '#4平均粒径', 'value': '', 'unit': 'mm', 'memo': '#4平均粒径'},
-        {'id': 'dp4_r', 'type': '粒径分布', 'text': '#4平均粒径质量分数 ', 'value': '', 'unit': '-', 'memo': '取0~1'},
-        {'id': 'dp5', 'type': '粒径分布', 'text': '#5平均粒径', 'value': '', 'unit': 'mm', 'memo': '#5平均粒径'},
-        {'id': 'dp5_r', 'type': '粒径分布', 'text': '#5平均粒径质量分数 ', 'value': '', 'unit': '-', 'memo': '取0~1'},
+        {'id': 'T', 'type': '基本参数', 'text': '温度', 'value': '', 'unit': '℃', 'memo': ''},
+        {'id': 'P', 'type': '基本参数', 'text': '压力', 'value': '', 'unit': 'MPa', 'memo': ''},
+        {'id': 'x', 'type': '基本参数', 'text': '干度', 'value': '', 'unit': '-', 'memo': '取0~1'},
     ]
     return [modvar_type, modvar_data]
 
@@ -41,84 +27,97 @@ def modx_00():
 # 计算主体
 def mody_00(x):
     # 从字典提取变量
-    q0 = float(x['q0'])
-    t = float(x['t'])
-    vi = float(x['vi'])
-    den_g = float(x['den_g'])
-    mu = float(x['mu'])
-    den_p = float(x['den_p'])
-    Nc = float(x['Nc'])
-    n = float(x['n'])
-    dp1 = float(x['dp1'])
-    dp1_r = float(x['dp1_r'])
-    dp2 = float(x['dp2'])
-    dp2_r =float(x['dp2_r'])
-    dp3 =float(x['dp3'])
-    dp3_r =float(x['dp3_r'])
-    dp4 = float(x['dp4'])
-    dp4_r = float(x['dp4_r'])
-    dp5 = float(x['dp5'])
-    dp5_r = float(x['dp5_r'])
+    T = 0 if x['T'] == '' else float(x['T'])+273.15
+    P = 0 if x['P'] == '' else float(x['P'])
+    xr = 0 if x['x'] == '' else float(x['x'])
 
     # 计算结果
-    q = q0*(t+273)/273
-    A = q/3600/vi
-    D0 = (q / 3600 / (1 * 0.44 * 0.21 * vi))**0.5
-    a = D0*0.44
-    b = D0*0.21
-    D = 2*(A/math.pi)**0.5
-    De = D0*0.4
-    hc = D0*0.5
-    h = D0*1.4
-    H = D0*3
-    D2 = D0*0.4
-    Cof_ZL = 16*a*b/De**2
-    den_gz = den_g*273/(t+273)
-    DP = Cof_ZL*vi**2/2*den_gz
-    tmp1 = (4*9.8*mu*(den_p-den_gz)/(3*den_gz**2))**0.33
-    Vs = 2.991*tmp1*((b/D0)**0.4/(1-b/D0)**0.33)*D0**0.067*vi**0.66
-    d50 = 10**6*(9*mu*b/(2*math.pi*Nc*vi*(den_p-den_gz)))**0.5
-    dp1_tmp = dp1/d50
-    dp2_tmp = dp2/d50
-    dp3_tmp = dp3/d50
-    dp4_tmp = dp4/d50
-    dp5_tmp = dp5/d50
-    dp1_tmp = 1-math.exp(-0.693*dp1_tmp**(1/(1+n)))
-    dp2_tmp = 1-math.exp(-0.693*dp2_tmp**(1/(1+n)))
-    dp3_tmp = 1-math.exp(-0.693*dp3_tmp**(1/(1+n)))
-    dp4_tmp = 1-math.exp(-0.693*dp4_tmp**(1/(1+n)))
-    dp5_tmp = 1-math.exp(-0.693*dp5_tmp**(1/(1+n)))
-    dp1_tmp = dp1_tmp*dp1_r
-    dp2_tmp = dp2_tmp*dp2_r
-    dp3_tmp = dp3_tmp*dp3_r
-    dp4_tmp = dp4_tmp*dp4_r
-    dp5_tmp = dp5_tmp*dp5_r
-    eff = dp1_tmp+dp2_tmp+dp3_tmp+dp4_tmp+dp5_tmp
+    if T == 0:
+        rlt = IAPWS97(P=P, x=xr)
+    elif P == 0:
+        rlt = IAPWS97(T=T, x=xr)
+    elif T != 0 and P != 0:
+        rlt = IAPWS97(T=T, P=P)
+    else:
+        rlt = '参数输入错误!'
+    print([rlt.region,T,P,xr])
+# 参数二次处理
+    if rlt.region == 1:
+        stat = '液态'
+        modvar_data = [
+            {'id': 'stat', 'type': '物性参数', 'text': '状态', 'value': stat, 'unit': '-', 'memo': ''},
+            {'id': 'P', 'type': '物性参数', 'text': '压力', 'value': "%.3f" % rlt.P, 'unit': 'MPa', 'memo': ''},
+            {'id': 'T', 'type': '物性参数', 'text': '温度', 'value': "%.3f" % (rlt.T - 273.15), 'unit': '℃', 'memo': ''},
+            {'id': 'v', 'type': '物性参数', 'text': '比容', 'value': "%.3f" % rlt.v, 'unit': 'm³/kg', 'memo': ''},
+            {'id': 'rho', 'type': '物性参数', 'text': '密度', 'value': "%.3f" % rlt.rho, 'unit': 'kg/m³', 'memo': ''},
+            {'id': 'h', 'type': '物性参数', 'text': '焓', 'value': "%.3f" % rlt.h, 'unit': 'kJ/kg', 'memo': ''},
+            {'id': 's', 'type': '物性参数', 'text': '熵', 'value': "%.3f" % rlt.s, 'unit': 'kJ/kg·K', 'memo': ''},
+            {'id': 'cp', 'type': '物性参数', 'text': '定压比热容', 'value': "%.3f" % rlt.cp, 'unit': 'kJ/kg·K', 'memo': ''},
+            {'id': 'cv', 'type': '物性参数', 'text': '定容比热容', 'value': "%.3f" % rlt.cv, 'unit': 'kJ/kg·K', 'memo': ''},
+            {'id': 'mu', 'type': '物性参数', 'text': '动力粘度', 'value': format(rlt.mu,'e'), 'unit': 'Pa·s', 'memo': ''},
+            {'id': 'nu', 'type': '物性参数', 'text': '运动粘度', 'value': format(rlt.nu,'e'), 'unit': 'm²/s', 'memo': ''},
+        ]
+
+    elif rlt.region == 2:
+        stat = '汽态'
+        modvar_data = [
+            {'id': 'stat', 'type': '物性参数', 'text': '状态', 'value': stat, 'unit': '-', 'memo': ''},
+            {'id': 'P', 'type': '物性参数', 'text': '压力', 'value': "%.3f" % rlt.P, 'unit': 'MPa', 'memo': ''},
+            {'id': 'T', 'type': '物性参数', 'text': '温度', 'value': "%.3f" % (rlt.T - 273.15), 'unit': '℃', 'memo': ''},
+            {'id': 'v', 'type': '物性参数', 'text': '比容', 'value': "%.3f" % rlt.v, 'unit': 'm³/kg', 'memo': ''},
+            {'id': 'rho', 'type': '物性参数', 'text': '密度', 'value': "%.3f" % rlt.rho, 'unit': 'kg/m³', 'memo': ''},
+            {'id': 'h', 'type': '物性参数', 'text': '焓', 'value': "%.3f" % rlt.h, 'unit': 'kJ/kg', 'memo': ''},
+            {'id': 's', 'type': '物性参数', 'text': '熵', 'value': "%.3f" % rlt.s, 'unit': 'kJ/kg·K', 'memo': ''},
+            {'id': 'cp', 'type': '物性参数', 'text': '定压比热容', 'value': "%.3f" % rlt.cp, 'unit': 'kJ/kg·K', 'memo': ''},
+            {'id': 'cv', 'type': '物性参数', 'text': '定容比热容', 'value': "%.3f" % rlt.cv, 'unit': 'kJ/kg·K', 'memo': ''},
+            {'id': 'mu', 'type': '物性参数', 'text': '动力粘度', 'value': format(rlt.mu,'e'), 'unit': 'Pa·s', 'memo': ''},
+            {'id': 'nu', 'type': '物性参数', 'text': '运动粘度', 'value': format(rlt.nu,'e'), 'unit': 'm²/s', 'memo': ''},
+        ]
+
+    elif rlt.region == 3:
+        stat = '超临界'
+        modvar_data = [
+            {'id': 'stat', 'type': '物性参数', 'text': '状态', 'value': stat, 'unit': '-', 'memo': ''},
+            {'id': 'P', 'type': '物性参数', 'text': '压力', 'value': "%.3f" % rlt.P, 'unit': 'MPa', 'memo': ''},
+            {'id': 'T', 'type': '物性参数', 'text': '温度', 'value': "%.3f" % (rlt.T - 273.15), 'unit': '℃', 'memo': ''},
+            {'id': 'v', 'type': '物性参数', 'text': '比容', 'value': "%.3f" % rlt.v, 'unit': 'm³/kg', 'memo': ''},
+            {'id': 'rho', 'type': '物性参数', 'text': '密度', 'value': "%.3f" % rlt.rho, 'unit': 'kg/m³', 'memo': ''},
+            {'id': 'h', 'type': '物性参数', 'text': '焓', 'value': "%.3f" % rlt.h, 'unit': 'kJ/kg', 'memo': ''},
+            {'id': 's', 'type': '物性参数', 'text': '熵', 'value': "%.3f" % rlt.s, 'unit': 'kJ/kg·K', 'memo': ''},
+            {'id': 'cp', 'type': '物性参数', 'text': '定压比热容', 'value': "%.3f" % rlt.cp, 'unit': 'kJ/kg·K', 'memo': ''},
+            {'id': 'cv', 'type': '物性参数', 'text': '定容比热容', 'value': "%.3f" % rlt.cv, 'unit': 'kJ/kg·K', 'memo': ''},
+            {'id': 'mu', 'type': '物性参数', 'text': '动力粘度', 'value': format(rlt.mu,'e'), 'unit': 'Pa·s', 'memo': ''},
+            {'id': 'nu', 'type': '物性参数', 'text': '运动粘度', 'value': format(rlt.nu,'e'), 'unit': 'm²/s', 'memo': ''},
+        ]
+
+    elif rlt.region == 4:
+        stat = '两相'
+        modvar_data = [
+            {'id': 'stat', 'type': '物性参数', 'text': '状态', 'value': stat, 'unit': '-', 'memo': ''},
+            {'id': 'P', 'type': '物性参数', 'text': '压力', 'value': "%.3f" % rlt.P, 'unit': 'MPa', 'memo': ''},
+            {'id': 'T', 'type': '物性参数', 'text': '温度', 'value': "%.3f" % (rlt.T - 273.15), 'unit': '℃', 'memo': ''},
+            {'id': 'v', 'type': '物性参数', 'text': '液态比容', 'value': "%.3f" % rlt.Liquid.v, 'unit': 'm³/kg', 'memo': ''},
+            {'id': 'rho', 'type': '物性参数', 'text': '液态密度', 'value': "%.3f" % rlt.Liquid.rho, 'unit': 'kg/m³', 'memo': ''},
+            {'id': 'h', 'type': '物性参数', 'text': '液态焓', 'value': "%.3f" % rlt.Liquid.h, 'unit': 'kJ/kg', 'memo': ''},
+            {'id': 's', 'type': '物性参数', 'text': '液态熵', 'value': "%.3f" % rlt.Liquid.s, 'unit': 'kJ/kg·K', 'memo': ''},
+            {'id': 'cp', 'type': '物性参数', 'text': '液态定压比热容', 'value': "%.3f" % rlt.Liquid.cp, 'unit': 'kJ/kg·K', 'memo': ''},
+            {'id': 'cv', 'type': '物性参数', 'text': '液态定容比热容', 'value': "%.3f" % rlt.Liquid.cv, 'unit': 'kJ/kg·K', 'memo': ''},
+            {'id': 'mu', 'type': '物性参数', 'text': '液态动力粘度', 'value': format(rlt.Liquid.mu,'e'), 'unit': 'Pa·s', 'memo': ''},
+            {'id': 'nu', 'type': '物性参数', 'text': '液态运动粘度', 'value': format(rlt.Liquid.nu,'e'), 'unit': 'm²/s', 'memo': ''},
+            {'id': 'v', 'type': '物性参数', 'text': '汽态比容', 'value': "%.3f" % rlt.Vapor.v, 'unit': 'm³/kg', 'memo': ''},
+            {'id': 'rho', 'type': '物性参数', 'text': '汽态密度', 'value': "%.3f" % rlt.Vapor.rho, 'unit': 'kg/m³', 'memo': ''},
+            {'id': 'h', 'type': '物性参数', 'text': '汽态焓', 'value': "%.3f" % rlt.Vapor.h, 'unit': 'kJ/kg', 'memo': ''},
+            {'id': 's', 'type': '物性参数', 'text': '汽态熵', 'value': "%.3f" % rlt.Vapor.s, 'unit': 'kJ/kg·K', 'memo': ''},
+            {'id': 'cp', 'type': '物性参数', 'text': '汽态定压比热容', 'value': "%.3f" % rlt.Vapor.cp, 'unit': 'kJ/kg·K', 'memo': ''},
+            {'id': 'cv', 'type': '物性参数', 'text': '汽态定容比热容', 'value': "%.3f" % rlt.Vapor.cv, 'unit': 'kJ/kg·K', 'memo': ''},
+            {'id': 'mu', 'type': '物性参数', 'text': '汽态动力粘度', 'value': format(rlt.Vapor.mu, 'e'), 'unit': 'Pa·s', 'memo': ''},
+            {'id': 'nu', 'type': '物性参数', 'text': '汽态运动粘度', 'value': format(rlt.Vapor.nu, 'e'), 'unit': 'm²/s', 'memo': ''},
+        ]
+    else:
+        stat = 'error'
+        modvar_data = []
 
 # 建立输出变量，生成结构体
-    modvar_type = ['尺寸参数', '评价参数']
-    modvar_data = [
-        # {'id': 'q0', 'type': '输入参数', 'text': '标准状况下的体积流量', 'value': "%.3f" % q0, 'unit': 'Nm3/h', 'memo': ''},
-        # {'id': 't', 'type': '输入参数', 'text': '入口设定温度', 'value': "%.3f" % t, 'unit': '℃', 'memo': ''},
-        # {'id': 'vi', 'type': '输入参数', 'text': '旋风分离器入口气速', 'value': "%.3f" % vi, 'unit': 'm/s', 'memo': ''},
-        # {'id': 'mu', 'type': '输入参数', 'text': '工作温度下气体黏度', 'value': "%.3f" % mu, 'unit': 'kg/(m▪s)', 'memo': ''},
-        # {'id': 'den_g', 'type': '输入参数', 'text': '工作温度下固体密度', 'value': "%.3f" % den_g, 'unit': 'kg/m3', 'memo': ''},
-        {'id': 'A', 'type': '尺寸参数', 'text': '入口面积', 'value': "%.3f" % A, 'unit': 'm', 'memo': ''},
-        {'id': 'D0', 'type': '尺寸参数', 'text': '旋风分离器直径', 'value': "%.3f" % D0, 'unit': 'm', 'memo': ''},
-        {'id': 'a', 'type': '尺寸参数', 'text': '入口高', 'value': "%.3f" % a, 'unit': 'm', 'memo': ''},
-        {'id': 'b', 'type': '尺寸参数', 'text': '入口宽', 'value': "%.3f" % b, 'unit': 'm', 'memo': ''},
-        {'id': 'D', 'type': '尺寸参数', 'text': '入口当量直径', 'value': "%.3f" % D, 'unit': 'm', 'memo': ''},
-        {'id': 'De', 'type': '尺寸参数', 'text': '排气管直径', 'value': "%.3f" % De, 'unit': 'm', 'memo': ''},
-        {'id': 'hc', 'type': '尺寸参数', 'text': '排气管插入深度', 'value': "%.3f" % hc, 'unit': 'm', 'memo': ''},
-        {'id': 'h', 'type': '尺寸参数', 'text': '旋风分离器筒体高', 'value': "%.3f" % h, 'unit': 'm', 'memo': ''},
-        {'id': 'H', 'type': '尺寸参数', 'text': '旋风分离器总高', 'value': "%.3f" % H, 'unit': 'm', 'memo': ''},
-        {'id': 'D2', 'type': '尺寸参数', 'text': '排灰管直径', 'value': "%.3f" % D2, 'unit': 'm', 'memo': ''},
-        {'id': 'dp1_eff', 'type': '评价参数', 'text': '#1分离效率', 'value': "%.3f" % dp1_tmp, 'unit': '-', 'memo': ''},
-        {'id': 'dp2_eff', 'type': '评价参数', 'text': '#2分离效率', 'value': "%.3f" % dp2_tmp, 'unit': '-', 'memo': ''},
-        {'id': 'dp3_eff', 'type': '评价参数', 'text': '#3分离效率', 'value': "%.3f" % dp3_tmp, 'unit': '-', 'memo': ''},
-        {'id': 'dp4_eff', 'type': '评价参数', 'text': '#4分离效率', 'value': "%.3f" % dp4_tmp, 'unit': '-', 'memo': ''},
-        {'id': 'dp5_eff', 'type': '评价参数', 'text': '#5分离效率', 'value': "%.3f" % dp5_tmp, 'unit': '-', 'memo': ''},
-        {'id': 'eff', 'type': '评价参数', 'text': '平均分离效率', 'value': "%.3f" % eff, 'unit': '-', 'memo': ''},
-    ]
+    modvar_type = ['物性参数']
 
     return [modvar_type, modvar_data]
