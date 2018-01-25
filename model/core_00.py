@@ -8,7 +8,7 @@ def modinfo_00():
     mod_name = '测试模块'
     mod_imageurl = '../static/image/iapws97.png'
     mod_info = '该模块用于新增算法的调试，调试完成后会更新到对应链接。'
-    mod_desp = "该模块为IAPWS97水蒸气计算模块。可以输入以下参数组合：温度+干度; 压力+干度;  温度+压力;"
+    mod_desp = "该模块为IAPWS97水蒸气计算模块。可以输入以下参数组合：<br>温度+干度; <br>压力+干度;  <br>温度+压力;"
 
     return [mod_name, mod_imageurl, mod_info, mod_desp]
 
