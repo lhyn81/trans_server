@@ -1,5 +1,4 @@
-# CYCLONE
-import math
+# TEST
 from iapws import IAPWS97
 
 
@@ -27,20 +26,30 @@ def modx_test():
 # 计算主体
 def mody_test(x):
     # 从字典提取变量
-    T = 0 if x['T'] == '' else float(x['T'])+273.15
-    P = 0 if x['P'] == '' else float(x['P'])
-    xr = 0 if x['x'] == '' else float(x['x'])
-
+    mod = x['mod']
+    pass
     # 计算结果
-    if T == 0:
-        rlt = IAPWS97(P=P, x=xr)
-    elif P == 0:
-        rlt = IAPWS97(T=T, x=xr)
-    elif T != 0 and P != 0:
-        rlt = IAPWS97(T=T, P=P)
+    if mod == 'TP':
+        T = 0 if x['T'] == '' else float(x['T']) + 273.15
+        P = 0 if x['P'] == '' else float(x['P'])
+        rlt = IAPWS97(P=P, T=T)
+    elif mod == 'T':
+        T = 0 if x['T'] == '' else float(x['T']) + 273.15
+        rlt = IAPWS97(T=T, x=0.5)
+    elif mod == 'P':
+        P = 0 if x['P'] == '' else float(x['P'])
+        rlt = IAPWS97(P=P, x=0.5)
+    elif mod == 'Th':
+        T = 0 if x['T'] == '' else float(x['T']) + 273.15
+        h = 0 if x['h'] == '' else float(x['h'])
+        rlt = IAPWS97(T=T, h=h)
+    elif mod == 'Ph':
+        P = 0 if x['P'] == '' else float(x['P'])
+        h = 0 if x['h'] == '' else float(x['h'])
+        rlt = IAPWS97(P=P, h=h)
     else:
         rlt = '参数输入错误!'
-    print([rlt.region,T,P,xr])
+
 # 参数二次处理
     if rlt.region == 1:
         stat = '液态'
@@ -91,7 +100,7 @@ def mody_test(x):
         ]
 
     elif rlt.region == 4:
-        stat = '两相'
+        stat = '饱和态'
         modvar_data = [
             {'id': 'stat', 'type': '物性参数', 'text': '状态', 'value': stat, 'unit': '-', 'memo': ''},
             {'id': 'P', 'type': '物性参数', 'text': '压力', 'value': "%.3f" % rlt.P, 'unit': 'MPa', 'memo': ''},

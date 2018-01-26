@@ -1,0 +1,47 @@
+{% extends "default.html" %}
+
+{% block lh %}
+    <div class="alert alert-dark" name="gp1" >
+        <form class="form-inline" action="/do/{{ mod_name }}" method="GET" >
+        <input name="T"  type="text" class="input-small" style="width:3cm;" placeholder="温度：℃">&nbsp;&nbsp;&nbsp;
+        <input name="P"  type="text" class="input-small" style="width:3cm;" placeholder="压力：MPa">&nbsp;&nbsp;&nbsp;
+        <button type="submit" class="btn btn-sm">查询</button>
+        <input type="hidden" name="mod"  value="TP">
+        </form>
+    </div>
+
+    <div class="alert alert-dark" name="gp2" >
+        <form class="form-inline" action="/do/{{ mod_name }}" method="GET" >
+        <input name="T" type="text" class="input-small" style="width:3cm;" placeholder="温度：℃">&nbsp;&nbsp;&nbsp;
+        <button type="submit" class="btn btn-sm">查询</button>
+        <input type="hidden" name="mod" value="T">
+        </form>
+    </div>
+
+    <div class="alert alert-dark" name="gp3" >
+        <form class="form-inline" action="/do/{{ mod_name }}" method="GET" >
+        <input name="P" type="text" class="input-small" style="width:3cm;" placeholder="压力：MPa">&nbsp;&nbsp;&nbsp;
+        <button type="submit" class="btn btn-sm">查询</button>
+        <input type="hidden" name="mod" value="P">
+        </form>
+    </div>
+
+    <div class="alert alert-dark" name="gp4" >
+        <form class="form-inline" action="/do/{{ mod_name }}" method="GET" >
+        <input name="T" type="text" class="input-small" style="width:3cm;" placeholder="温度：℃">&nbsp;&nbsp;&nbsp;
+        <input name="h" type="text" class="input-small" style="width:3cm;" placeholder="焓值：kJ/kg">&nbsp;&nbsp;&nbsp;
+        <button type="submit" class="btn btn-sm" disabled>查询</button>
+        <input type="hidden" name="mod" value="Th">
+        </form>
+    </div>
+
+    <div class="alert alert-dark" name="gp5" >
+        <form class="form-inline" action="/do/{{ mod_name }}" method="GET" >
+        <input name="P" type="text" class="input-small" style="width:3cm;"  placeholder="压力：MPa">&nbsp;&nbsp;&nbsp;
+        <input name="h" type="text" class="input-small" style="width:3cm;" placeholder="焓值：kJ/kg">&nbsp;&nbsp;&nbsp;
+        <button type="submit" class="btn btn-sm">查询</button>
+        <input type="hidden" name="mod" value="Ph">
+        </form>
+    </div>
+
+{% endblock %}
