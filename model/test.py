@@ -4,7 +4,7 @@ from iapws import IAPWS97
 
 
 # 定义算法信息
-def modinfo_00():
+def modinfo_test():
     mod_name = '测试模块'
     mod_imageurl = '../static/image/iapws97.png'
     mod_info = '该模块用于新增算法的调试，调试完成后会更新到对应链接。'
@@ -14,7 +14,7 @@ def modinfo_00():
 
 
 # 定义输入变量，生成结构体.
-def modx_00():
+def modx_test():
     modvar_type = ['基本参数']
     modvar_data = [
         {'id': 'T', 'type': '基本参数', 'text': '温度', 'value': '', 'unit': '℃', 'memo': ''},
@@ -25,7 +25,7 @@ def modx_00():
 
 
 # 计算主体
-def mody_00(x):
+def mody_test(x):
     # 从字典提取变量
     T = 0 if x['T'] == '' else float(x['T'])+273.15
     P = 0 if x['P'] == '' else float(x['P'])

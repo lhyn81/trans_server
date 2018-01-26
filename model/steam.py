@@ -3,7 +3,7 @@ from iapws import IAPWS97
 
 
 # 定义算法信息
-def modinfo_02():
+def modinfo_steam():
     mod_name = '水蒸气参数查询模块（依据IAPWS97）'
     mod_imageurl = '../static/image/iapws97.png'
     mod_info = '该模块用于水的各种相态下物性参数查询。'
@@ -13,22 +13,23 @@ def modinfo_02():
 
 
 # 定义输入变量，生成结构体.
-def modx_02():
+def modx_steam():
     modvar_type = ['基本参数']
     modvar_data = [
         {'id': 'T', 'type': '基本参数', 'text': '温度', 'value': '', 'unit': '℃', 'memo': ''},
         {'id': 'P', 'type': '基本参数', 'text': '压力', 'value': '', 'unit': 'MPa', 'memo': ''},
+        {'id': 'h', 'type': '基本参数', 'text': '焓值', 'value': '', 'unit': 'kJ/kg', 'memo': ''},
         {'id': 'x', 'type': '基本参数', 'text': '干度', 'value': '', 'unit': '-', 'memo': '取0~1'},
     ]
     return [modvar_type, modvar_data]
 
 
 # 计算主体
-def mody_02(x):
+def mody_steam(x):
     # 从字典提取变量
     T = 0 if x['T'] == '' else float(x['T'])+273.15
     P = 0 if x['P'] == '' else float(x['P'])
-    xr = 0 if x['x'] == '' else float(x['x'])
+    xr = 0 if x['h'] == '' else float(x['h'])
 
     # 计算结果
     if T == 0:

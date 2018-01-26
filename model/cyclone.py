@@ -2,7 +2,7 @@
 import math
 
 
-def modinfo_01():
+def modinfo_cyclone():
     mod_name = '旋风分离器'
     mod_imageurl = 'https://gss1.bdstatic.com/-vo3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=61a8537408e9390156028a3843d733da/1f178a82b9014a90eb72ade9a0773912b31bee12.jpg'
     mod_info = '旋风分离器，是用于气固体系或者液固体系的分离的一种设备。工作原理为靠气流切向引入造成的旋转运动，使具有较大惯性离心力的固体颗粒或液滴甩向外壁面分开。旋风分离器的主要特点是结构简单、操作弹性大、效率较高、管理维修方便，价格低廉，用于捕集直径5～10μm以上的粉尘，广泛应用于制药工业中，特别适合粉尘颗粒较粗，含尘浓度较大，高温、高压条件下，也常作为流化床反应器的内分离装置，或作为预分离器使用，是工业上应用很广的一种分离设备。'
@@ -12,7 +12,7 @@ def modinfo_01():
 
 
 # 定义输入变量，生成结构体.
-def modx_01():
+def modx_cyclone():
     modvar_type = ['基本参数', '粒径分布']
     modvar_data = [
         {'id': 'q0', 'type': '基本参数', 'text':'标准状况下的体积流量', 'value': '', 'unit': 'Nm3/h', 'memo': '可尝试50000'},
@@ -38,7 +38,7 @@ def modx_01():
 
 
 # 计算主体
-def mody_01(x):
+def mody_cyclone(x):
     # 从字典提取变量
     q0 = float(x['q0'])
     t = float(x['t'])

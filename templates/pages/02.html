@@ -1,36 +1,43 @@
 {% extends "default.html" %}
+
 {% block lh %}
-    <div class="alert alert-dark"><strong>{{ info[0] }}</strong></div>
-    <p><img src={{ info[1] }} class="img-rounded"</p>
-    <p>{{ info[2]|safe }}</p>
-    <div class="alert alert-dark"><strong>算法说明</strong></div>
-    <p>{{ info[3]|safe }}</p>
-	<form action="/do/{{ mod_name }}" method="POST" target="_blank" >
-    {% for modtype in var[0] %}
-    <div class="alert alert-dark">
-      <strong>{{ modtype }}</strong>
+    <form action="/do/{{ mod_name }}" method="POST" ></form>
+    <div class="alert alert-dark" id="gp1" >
+        <form class="form-inline" action="/do/{{ mod_name }}" method="POST" >
+        <input id="T" type="text" class="input-small" style="width:3cm;" placeholder="温度：℃">&nbsp;&nbsp;&nbsp;
+        <input id="P" type="text" class="input-small" style="width:3cm;" placeholder="压力：MPa">&nbsp;&nbsp;&nbsp;
+        <button type="submit" class="btn btn-sm">查询</button>
+        </form>
     </div>
-        <div  style="margin-bottom: 10px;margin-left: 10px" >
-        {% for moddata in var[1] %}
-            <table>
-                {% if moddata['type']==modtype %}
-                <tbody>
-                <tr>
-                <td style="width:8cm">{{ moddata['text'] }}</td>
-                {% if moddata['value'] != '' %}
-                <td style="width:3cm"><input type="text" style="width:3cm;height:30px;margin:4px;padding:2px" class="form-control" value= {{ moddata['value'] }} name={{ moddata['id'] }} id={{ moddata['id'] }} placeholder="必填"></td>
-                {% else %}
-                <td style="width:3cm"><input type="text" style="width:3cm;height:30px;margin:4px;padding:2px" class="form-control" name={{ moddata['id'] }} id={{ moddata['id'] }} placeholder="必填"></td>
-                {% endif %}
-                <td style="width:3cm">{{ moddata['unit'] }}</td>
-                <td style="width:8cm">{{ moddata['memo'] }}</td>
-                </tr>
-                </tbody>
-                {% endif %}
-            </table>
-        {% endfor %}
-        </div>
-    {% endfor %}
-    <center><button type="submit" class="btn btn-primary" style="width:3cm">计  算</button></center>
-	</form>
+
+    <div class="alert alert-dark" id="gp2" >
+        <form class="form-inline" action="/do/{{ mod_name }}" method="POST" >
+        <input id="T" type="text" class="input-small" style="width:3cm;" placeholder="温度：℃">&nbsp;&nbsp;&nbsp;
+        <button type="submit" class="btn btn-sm">查询</button>
+        </form>
+    </div>
+
+    <div class="alert alert-dark" id="gp3" >
+        <form class="form-inline" action="/do/{{ mod_name }}" method="POST" >
+        <input id="P" type="text" class="input-small" style="width:3cm;" placeholder="压力：MPa">&nbsp;&nbsp;&nbsp;
+        <button type="submit" class="btn btn-sm">查询</button>
+        </form>
+    </div>
+
+    <div class="alert alert-dark" id="gp4" >
+        <form class="form-inline" action="/do/{{ mod_name }}" method="POST" >
+        <input id="T" type="text" class="input-small" style="width:3cm;" placeholder="温度：℃">&nbsp;&nbsp;&nbsp;
+        <input id="h" type="text" class="input-small" style="width:3cm;" placeholder="焓值：kJ/kg">&nbsp;&nbsp;&nbsp;
+        <button type="submit" class="btn btn-sm">查询</button>
+        </form>
+    </div>
+
+    <div class="alert alert-dark" id="gp5" >
+        <form class="form-inline" action="/do/{{ mod_name }}" method="POST" >
+        <input id="P" type="text" class="input-small" style="width:3cm;"  placeholder="压力：MPa">&nbsp;&nbsp;&nbsp;
+        <input id="h" type="text" class="input-small" style="width:3cm;" placeholder="焓值：kJ/kg">&nbsp;&nbsp;&nbsp;
+        <button type="submit" class="btn btn-sm">查询</button>
+        </form>
+    </div>
+
 {% endblock %}

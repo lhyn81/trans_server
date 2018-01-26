@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, send_file
-from model.core_00 import modinfo_00, modx_00, mody_00
-from model.core_01 import modinfo_01, modx_01, mody_01
-from model.core_02 import modinfo_02, modx_02, mody_02
+from model.test import modinfo_test, modx_test, mody_test
+from model.cyclone import modinfo_cyclone, modx_cyclone, mody_cyclone
+from model.steam import modinfo_steam, modx_steam, mody_steam
 from model.utils import export_docx
 
 
@@ -15,30 +15,30 @@ def index():
 
 @app.route('/show/<mod_name>', methods=['GET'])
 def show(mod_name):
-    if mod_name == '00':
-        return render_template("show.html", info=modinfo_00(), var=modx_00(), mod_name=mod_name)
-    if mod_name == '01':
-        return render_template("show.html", info=modinfo_01(), var=modx_01(), mod_name=mod_name)
-    if mod_name == '02':
-        return render_template("show.html", info=modinfo_02(), var=modx_02(), mod_name=mod_name)
+    if mod_name == 'test':
+        return render_template("pages/02.html", info=modinfo_test(), var=modx_test(), mod_name=mod_name)
+    if mod_name == 'cyclone':
+        return render_template("show.html", info=modinfo_cyclone(), var=modx_cyclone(), mod_name=mod_name)
+    if mod_name == 'steam':
+        return render_template("show.html", info=modinfo_steam(), var=modx_steam(), mod_name=mod_name)
 
 
 @app.route('/do/<mod_name>', methods=['POST'])
 def do(mod_name):
-    if mod_name == '00':
+    if mod_name == 'test':
         x = request.form.to_dict()
-        y = mody_00(x)
+        y = mody_test(x)
         fn = export_docx(y)
-        #return y.__str__()
+        return y.__str__()
         return render_template("do.html", var=y, fn=fn)
-    if mod_name == '01':
+    if mod_name == 'cyclone':
         x = request.form.to_dict()
-        y = mody_01(x)
+        y = mody_cyclone(x)
         fn = export_docx(y)
         return render_template("do.html", var=y, fn=fn)
-    if mod_name == '02':
+    if mod_name == 'steam':
         x = request.form.to_dict()
-        y = mody_02(x)
+        y = mody_steam(x)
         fn = export_docx(y)
         return render_template("do.html", var=y, fn=fn)
 
