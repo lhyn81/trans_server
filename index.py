@@ -37,7 +37,7 @@ def do(mod_name):
     if mod_name == 'steam':
         x = request.args.to_dict()
         y = mody_test(x)
-        return render_template("do.html", var=y)
+        return render_template("/pages/do_steam.html", var=y)
 
 
 @app.route('/download/<fn>')
