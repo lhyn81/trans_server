@@ -17,24 +17,32 @@ def modinfo_aspen():
 def modx_aspen():
     modvar_type = ['原料工业分析', '原料元素分析','模型参数设定']
     modvar_data = [
-        {'id': 'ar_w', 'type': '原料工业分析', 'text':'收到基水分', 'value': '4.87', 'unit': '1', 'memo': 'Disabled'},
-        {'id': 'ar_v', 'type': '原料工业分析', 'text':'收到基挥发分', 'value': '71.95', 'unit': '1', 'memo': 'Disabled'},
-        {'id': 'ar_fc', 'type': '原料工业分析', 'text':'收到基固定碳', 'value': '17.25', 'unit': '1', 'memo':'Disabled'},
-        {'id': 'ad_C', 'type': '原料元素分析', 'text':'干燥无灰基C', 'value': '44.25', 'unit': '1', 'memo': 'Disabled'},
-        {'id': 'ad_H', 'type': '原料元素分析', 'text': '干燥无灰基H', 'value': '5.62', 'unit': '1', 'memo': 'Disabled'},
-        {'id': 'ad_O', 'type': '原料元素分析', 'text': '干燥无灰基O', 'value': '43.22', 'unit': '1', 'memo': 'Disabled'},
+        {'id': 'ar_w', 'type': '原料工业分析', 'text':'收到基水分', 'value': '4.87', 'unit': '%', 'memo': ''},
+        {'id': 'ar_v', 'type': '原料工业分析', 'text':'收到基挥发分', 'value': '71.95', 'unit': '%', 'memo': ''},
+        {'id': 'ar_fc', 'type': '原料工业分析', 'text':'收到基固定碳', 'value': '17.25', 'unit': '%', 'memo':''},
+        {'id': 'ad_C', 'type': '原料元素分析', 'text':'干燥无灰基C', 'value': '44.25', 'unit': '%', 'memo': ''},
+        {'id': 'ad_H', 'type': '原料元素分析', 'text': '干燥无灰基H', 'value': '5.62', 'unit': '%', 'memo': ''},
+        {'id': 'ad_O', 'type': '原料元素分析', 'text': '干燥无灰基O', 'value': '43.22', 'unit': '%', 'memo': ''},
         # {'id': 'ad_N', 'type': '原料元素分析', 'text': '干燥无灰基N', 'value': '', 'unit': '1', 'memo': ''},
         # {'id': 'ad_S', 'type': '原料元素分析', 'text': '干燥无灰基S ', 'value': '', 'unit': '1', 'memo': ''},
-        {'id': 'feed', 'type': '模型参数设定', 'text': '进料量', 'value': '4000', 'unit': 'kg/hr', 'memo': 'Enabled'},
-        {'id': 'air', 'type': '模型参数设定', 'text': '进空气量', 'value': '5000', 'unit': 'm3/hr', 'memo': 'Enabled'},
-        {'id': 'temp', 'type': '模型参数设定', 'text': '气化温度', 'value': '600', 'unit': '℃', 'memo': 'Enabled'},
+        {'id': 'feed', 'type': '模型参数设定', 'text': '进料量', 'value': '4000', 'unit': 'kg/hr', 'memo': ''},
+        {'id': 'air', 'type': '模型参数设定', 'text': '进空气量', 'value': '5000', 'unit': 'm3/hr', 'memo': ''},
+        {'id': 'temp', 'type': '模型参数设定', 'text': '气化温度', 'value': '600', 'unit': '℃', 'memo': ''},
     ]
     return [modvar_type, modvar_data]
 
 
 def mody_aspen(x):
+
     import pythoncom
     pythoncom.CoInitialize()
+
+    ar_w = float(x['ar_w'])
+    ar_v = float(x['ar_v'])
+    ar_fc = float(x['ar_fc'])
+    ad_C = float(x['ad_C'])
+    ad_H = float(x['ad_H'])
+    ad_O = float(x['ad_O'])
 
     feed = float(x['feed'])
     air = float(x['air'])
@@ -59,6 +67,19 @@ def mody_aspen(x):
     # #show()
 
     aspen.InitFromArchive2(os.path.abspath('model\\bkp\\biogasi01.bkp'))
+    # 设置工业分析
+    aspen.Tree.FindNode(r'\Data\Streams\BIOMASS\Input\ELEM\NCPSD\BIOMASS\PROXANAL\#0').Value = ar_w
+    aspen.Tree.FindNode(r'\Data\Streams\BIOMASS\Input\ELEM\NCPSD\BIOMASS\PROXANAL\#1').Value = ar_fc
+    aspen.Tree.FindNode(r'\Data\Streams\BIOMASS\Input\ELEM\NCPSD\BIOMASS\PROXANAL\#2').Value = ar_v
+    aspen.Tree.FindNode(r'\Data\Streams\BIOMASS\Input\ELEM\NCPSD\BIOMASS\PROXANAL\#3').Value = 100 - ar_w - ar_fc - ar_v
+
+    # 设置元素分析
+    aspen.Tree.FindNode(r'\Data\Streams\BIOMASS\Input\ELEM\NCPSD\BIOMASS\ULTANAL\#6').Value = ad_O
+    aspen.Tree.FindNode(r'\Data\Streams\BIOMASS\Input\ELEM\NCPSD\BIOMASS\ULTANAL\#1').Value = ad_C
+    aspen.Tree.FindNode(r'\Data\Streams\BIOMASS\Input\ELEM\NCPSD\BIOMASS\ULTANAL\#2').Value = ad_H
+    aspen.Tree.FindNode(r'\Data\Streams\BIOMASS\Input\ELEM\NCPSD\BIOMASS\ULTANAL\#0').Value = 100 - ad_C - ad_H - ad_O
+
+    # 设置输入参数
     aspen.Tree.Data.Streams.BIOMASS.Input.TOTFLOW.NCPSD.Value = feed
     aspen.Tree.Data.Streams.O2.Input.TOTFLOW.MIXED.Value = air
     aspen.Tree.Data.Blocks.B8.Input.TEMP.Value = temp + 273

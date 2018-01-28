@@ -1,5 +1,8 @@
 import os
+import pythoncom
 import win32com.client as win32
+
+pythoncom.CoInitialize()
 
 aspen = win32.Dispatch("Apwn.Document")
 aspen.InitFromArchive2("biogasi01.bkp")
@@ -27,6 +30,10 @@ def prt_node(obj, lv=0, uplm=5):
 		except:
 			pass
 
-		
 #prt_elem(aspen.Tree.Data)
-prt_node(aspen.Tree.Data,uplm=3)
+#prt_node(aspen.Tree.Data,uplm=3)
+#a = aspen.Tree.Findnode(r'\Data\Streams\BIOMASS\Input\ELEM\NCPSD\BIOMASS\PROXANAL\#3').Value
+#str = r'\Data\Streams\BIOMASS\Input\TOTFLOW\NCPSD'
+
+b = aspen.Tree.FindNode('\Data\Streams\OUTGAS\Output\MASSFLMX\$TOTAL').Value
+print(b)
