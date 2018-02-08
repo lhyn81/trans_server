@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request, send_file, jsonify
-from model.test import modinfo_test, modx_test, mody_test
-from model.cyclone import modinfo_cyclone, modx_cyclone, mody_cyclone
-from model.steam import modinfo_steam, modx_steam, mody_steam
-from model.aspen_01 import modinfo_aspen, modx_aspen, mody_aspen
+from model.cyclone import  mody_cyclone
+from model.steam import mody_steam
+from model.aspen_01 import mody_aspen
 from model.utils import export_docx
 from model.blue import modGroup, modItems 
 
@@ -19,25 +18,14 @@ def index():
 def show(mod_name):
     return render_template("show.html",groupinfo=modGroup,modinfo=modItems,info=modItems[mod_name])
 
-    # if mod_name == 'test':
-    #     return render_template("show.html",info=modinfo_cyclone())
-    # if mod_name == 'ajax':
-    #     rlt = {'total': 10, 'rows':[{'varID': 'q', 'varName': '热量', 'varUnit': 'kJ/kg'}]}
-    #     return jsonify(rlt)
-    # if mod_name == 'cyclone':
-    #     return render_template("show.html", info=modinfo_cyclone(), var=modx_cyclone(), mod_name=mod_name)
-    # if mod_name == 'steam':
-    #     return render_template("pages/show_steam.html", info=modinfo_steam(), var=modx_steam(), mod_name=mod_name)
-    # if mod_name == 'biogasi01':
-    #     return render_template("show.html", info=modinfo_aspen(), var=modx_aspen(), mod_name=mod_name)
-
 
 @app.route('/do/<mod_name>', methods=['GET', 'POST'])
 def do(mod_name):
     x = request.form.to_dict()
-    y = mody_cyclone(x)
+    Calculator = modItems[mod_name]['modCalculator']
+    print(Calculator)
+    y = globals()[Calculator](x)
     lenth = len(y)
-
     rlt = {'total': lenth, 'rows':y}
     rlt = jsonify(rlt)
     return rlt

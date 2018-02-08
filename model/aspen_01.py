@@ -5,33 +5,6 @@ import matplotlib.pyplot as plt
 from pylab import *
 import time
 
-
-def modinfo_aspen():
-    mod_name = '生物质气化模型'
-    mod_imageurl = ''
-    mod_info = '生物质气化模型'
-    mod_desp = '模型算法依据吉布斯自由能最小化原理编写'
-    return [mod_name, mod_imageurl, mod_info, mod_desp]
-
-# 定义输入变量，生成结构体.
-def modx_aspen():
-    modvar_type = ['原料工业分析', '原料元素分析','模型参数设定']
-    modvar_data = [
-        {'id': 'ar_w', 'type': '原料工业分析', 'text':'收到基水分', 'value': '4.87', 'unit': '%', 'memo': ''},
-        {'id': 'ar_v', 'type': '原料工业分析', 'text':'收到基挥发分', 'value': '71.95', 'unit': '%', 'memo': ''},
-        {'id': 'ar_fc', 'type': '原料工业分析', 'text':'收到基固定碳', 'value': '17.25', 'unit': '%', 'memo':''},
-        {'id': 'ad_C', 'type': '原料元素分析', 'text':'干燥无灰基C', 'value': '44.25', 'unit': '%', 'memo': ''},
-        {'id': 'ad_H', 'type': '原料元素分析', 'text': '干燥无灰基H', 'value': '5.62', 'unit': '%', 'memo': ''},
-        {'id': 'ad_O', 'type': '原料元素分析', 'text': '干燥无灰基O', 'value': '43.22', 'unit': '%', 'memo': ''},
-        # {'id': 'ad_N', 'type': '原料元素分析', 'text': '干燥无灰基N', 'value': '', 'unit': '1', 'memo': ''},
-        # {'id': 'ad_S', 'type': '原料元素分析', 'text': '干燥无灰基S ', 'value': '', 'unit': '1', 'memo': ''},
-        {'id': 'feed', 'type': '模型参数设定', 'text': '进料量', 'value': '4000', 'unit': 'kg/hr', 'memo': ''},
-        {'id': 'air', 'type': '模型参数设定', 'text': '进空气量', 'value': '5000', 'unit': 'm3/hr', 'memo': ''},
-        {'id': 'temp', 'type': '模型参数设定', 'text': '气化温度', 'value': '600', 'unit': '℃', 'memo': ''},
-    ]
-    return [modvar_type, modvar_data]
-
-
 def mody_aspen(x):
 
     import pythoncom
@@ -93,16 +66,15 @@ def mody_aspen(x):
     MassFlow = aspen.Tree.FindNode('\Data\Streams\OUTGAS\Output\MASSFLMX\$TOTAL').Value
     aspen.Close()
     #
-    modvar_type = ['气体组分', '产气量']
     modvar_data = [
-        {'id': 'CO_frac', 'type': '气体组分', 'text': 'CO', 'value': "%.3f" % CO_frac, 'unit': '-', 'memo': ''},
-        {'id': 'H2_frac', 'type': '气体组分', 'text': 'H2', 'value': "%.3f" % H2_frac, 'unit': '-', 'memo': ''},
-        {'id': 'O2_frac', 'type': '气体组分', 'text': 'O2', 'value': "%.3f" % O2_frac, 'unit': '-', 'memo': ''},
-        {'id': 'CH4_frac', 'type': '气体组分', 'text': 'CH4', 'value': "%.3f" % CH4_frac, 'unit': '-', 'memo': ''},
-        {'id': 'CO2_frac', 'type': '气体组分', 'text': 'CO2', 'value': "%.3f" % CO2_frac, 'unit': '-', 'memo': ''},
-        {'id': 'MassFlow', 'type': '产气量', 'text': '生物质气产量', 'value': "%.3f" % MassFlow, 'unit': 'kg/hr', 'memo': ''},
+        {'varID': 'CO_frac', 'varType': '气体组分', 'varName': 'CO含量', 'varVal': "%.3f" % CO_frac, 'varUnit': '-', 'varMemo': ''},
+        {'varID': 'H2_frac', 'varType': '气体组分', 'varName': 'H2含量', 'varVal': "%.3f" % H2_frac, 'varUnit': '-', 'varMemo': ''},
+        {'varID': 'O2_frac', 'varType': '气体组分', 'varName': 'O2含量', 'varVal': "%.3f" % O2_frac, 'varUnit': '-', 'varMemo': ''},
+        {'varID': 'CH4_frac', 'varType': '气体组分', 'varName': 'CH4含量', 'varVal': "%.3f" % CH4_frac, 'varUnit': '-', 'varMemo': ''},
+        {'varID': 'CO2_frac', 'varType': '气体组分', 'varName': 'CO2含量', 'varVal': "%.3f" % CO2_frac, 'varUnit': '-', 'varMemo': ''},
+        {'varID': 'MassFlow', 'varType': '产气量', 'varName': '生物质气产量', 'varVal': "%.3f" % MassFlow, 'varUnit': 'kg/hr', 'varMemo': ''},
     ]
 
-    return [modvar_type, modvar_data]
+    return modvar_data
 
 

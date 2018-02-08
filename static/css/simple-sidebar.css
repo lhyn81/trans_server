@@ -132,7 +132,10 @@ body {
   width:2cm;
 }
 
-table tr{
+.table tr{
   height:18px;
 }
 
+.datagrid-cell{
+    font-size:10px;
+  }
