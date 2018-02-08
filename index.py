@@ -4,6 +4,7 @@ from model.cyclone import modinfo_cyclone, modx_cyclone, mody_cyclone
 from model.steam import modinfo_steam, modx_steam, mody_steam
 from model.aspen_01 import modinfo_aspen, modx_aspen, mody_aspen
 from model.utils import export_docx
+from model.blue import modGroup, modItems 
 
 
 app = Flask(__name__)
@@ -11,44 +12,52 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template("home.html")
+    return render_template("home.html",groupinfo=modGroup,modinfo=modItems)
 
 
-@app.route('/show/<mod_name>', methods=['GET', 'POST'])
+@app.route('/show/<mod_name>', methods=['GET','POST'])
 def show(mod_name):
-    if mod_name == 'test':
-        return render_template("pages/show_test2.html")
-    if mod_name == 'ajax':
-        rlt = {'total': 10, 'rows':[{'varID': 'q', 'varName': '热量', 'varUnit': 'kJ/kg'}]}
-        #rlt = {'varID': 'q', 'varName': '热量', 'varUnit': 'kJ/kg'}
-        return jsonify(rlt)
-    if mod_name == 'cyclone':
-        return render_template("show.html", info=modinfo_cyclone(), var=modx_cyclone(), mod_name=mod_name)
-    if mod_name == 'steam':
-        return render_template("pages/show_steam.html", info=modinfo_steam(), var=modx_steam(), mod_name=mod_name)
-    if mod_name == 'biogasi01':
-        return render_template("show.html", info=modinfo_aspen(), var=modx_aspen(), mod_name=mod_name)
+    return render_template("show.html",groupinfo=modGroup,modinfo=modItems,info=modItems[mod_name])
+
+    # if mod_name == 'test':
+    #     return render_template("show.html",info=modinfo_cyclone())
+    # if mod_name == 'ajax':
+    #     rlt = {'total': 10, 'rows':[{'varID': 'q', 'varName': '热量', 'varUnit': 'kJ/kg'}]}
+    #     return jsonify(rlt)
+    # if mod_name == 'cyclone':
+    #     return render_template("show.html", info=modinfo_cyclone(), var=modx_cyclone(), mod_name=mod_name)
+    # if mod_name == 'steam':
+    #     return render_template("pages/show_steam.html", info=modinfo_steam(), var=modx_steam(), mod_name=mod_name)
+    # if mod_name == 'biogasi01':
+    #     return render_template("show.html", info=modinfo_aspen(), var=modx_aspen(), mod_name=mod_name)
 
 
 @app.route('/do/<mod_name>', methods=['GET', 'POST'])
 def do(mod_name):
-    if mod_name == 'test':
-        x = request.args.to_dict()
-        y = mody_test(x)
-        return render_template("do.html", var=y)
-    if mod_name == 'cyclone':
-        x = request.form.to_dict()
-        y = mody_cyclone(x)
-        fn = export_docx(y)
-        return render_template("do.html", var=y, fn=fn)
-    if mod_name == 'steam':
-        x = request.args.to_dict()
-        y = mody_steam(x)
-        return render_template("/pages/do_steam.html", var=y)
-    if mod_name == 'biogasi01':
-        x = request.form.to_dict()
-        y = mody_aspen(x)
-        return render_template("do.html", var=y)
+    x = request.form.to_dict()
+    y = mody_cyclone(x)
+    lenth = len(y)
+
+    rlt = {'total': lenth, 'rows':y}
+    rlt = jsonify(rlt)
+    return rlt
+    # if mod_name == 'test':
+    #     x = request.args.to_dict()
+    #     y = mody_test(x)
+    #     return render_template("do.html", var=y)
+    # if mod_name == 'cyclone':
+    #     x = request.form.to_dict()
+    #     y = mody_cyclone(x)
+    #     fn = export_docx(y)
+    #     return render_template("do.html", var=y, fn=fn)
+    # if mod_name == 'steam':
+    #     x = request.args.to_dict()
+    #     y = mody_steam(x)
+    #     return render_template("/pages/do_steam.html", var=y)
+    # if mod_name == 'biogasi01':
+    #     x = request.form.to_dict()
+    #     y = mody_aspen(x)
+    #     return render_template("do.html", var=y)
 
 
 @app.route('/download/<fn>')
