@@ -1,36 +1,65 @@
-{% extends "default.html" %}
+{% extends "base.html" %}
 {% block lh %}
-    <div class="alert alert-dark"><strong>{{ info[0] }}</strong></div>
-    <p><img src={{ info[1] }} class="img-rounded"</p>
-    <p>{{ info[2]|safe }}</p>
-    <div class="alert alert-dark"><strong>算法说明</strong></div>
-    <p>{{ info[3]|safe }}</p>
-	<form action="/do/{{ mod_name }}" method="POST" target="_blank" >
-    {% for modtype in var[0] %}
-    <div class="alert alert-dark">
-      <strong>{{ modtype }}</strong>
-    </div>
-        <div  style="margin-bottom: 10px;margin-left: 10px" >
-        {% for moddata in var[1] %}
-            <table>
-                {% if moddata['type']==modtype %}
-                <tbody>
-                <tr>
-                <td style="width:8cm">{{ moddata['text'] }}</td>
-                {% if moddata['value'] != '' %}
-                <td style="width:3cm"><input type="text" style="width:3cm;height:30px;margin:4px;padding:2px" class="form-control" value= {{ moddata['value'] }} name={{ moddata['id'] }} id={{ moddata['id'] }} placeholder="必填"></td>
-                {% else %}
-                <td style="width:3cm"><input type="text" style="width:3cm;height:30px;margin:4px;padding:2px" class="form-control" name={{ moddata['id'] }} id={{ moddata['id'] }} placeholder="必填"></td>
-                {% endif %}
-                <td style="width:3cm">{{ moddata['unit'] }}</td>
-                <td style="width:8cm">{{ moddata['memo'] }}</td>
-                </tr>
-                </tbody>
-                {% endif %}
-            </table>
-        {% endfor %}
-        </div>
-    {% endfor %}
-    <center><button type="submit" class="btn btn-primary" style="width:3cm">计  算</button></center>
-	</form>
+
+
+    <div class="alert alert-dark" align="left"><strong>模型介绍</strong></div>
+    <p align="left">{{ info[3]|safe }}</p>
+    <div class="alert alert-dark" align="left"><strong>模型计算</strong></div>
+    <form>
+            {% for modtype in var[0] %}
+            <div class="easyui-panel" title={{ modtype }} style="width:100%;max-width:800px;padding:30px;" data-options="collapsible:true">
+                <div  style="margin-bottom: 10px;margin-left: 10px" >
+                <table class="table table-bordered">
+                    <tbody>
+                    {% for moddata in var[1] %}
+                    {% if moddata['type']==modtype %}
+                    <tr>
+                    <td style="width:6cm; padding:2px;vertical-align: middle; font-size: 15px">{{ moddata['text'] }}</td>
+                    {% if moddata['value'] != '' %}
+                    <td style="width:3cm; padding:2px;vertical-align: middle; font-size: 15px "><input type="text" style="width:3cm;height:30px;margin:4px;padding:2px" class="form-control" value= {{ moddata['value'] }} name={{ moddata['id'] }} id={{ moddata['id'] }} ></td>
+                    {% else %}
+                    <td style="width:3cm; padding:2px;vertical-align: middle "><input type="text" style="width:3cm;height:30px;margin:4px;padding:2px" class="form-control" name={{ moddata['id'] }} id={{ moddata['id'] }} ></td>
+                    {% endif %}
+                    <td style="width:3cm; padding:2px;vertical-align: middle; font-size: 15px ">{{ moddata['unit'] }}</td>
+                    <td style="width:8cm; padding:2px;vertical-align: middle; font-size: 15px ">{{ moddata['memo'] }}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+            <br>
+            </div>
+            {% endfor %}
+            <br>
+        </form>
+    <center><button id="btn-do" onclick="doAjax();" class="btn btn-primary" style="width:3cm">计  算</button></center>
+    <hr>
+    <table class="easyui-datagrid" id="dg" title="计算结果" style="max-width:800px;height:300px" data-options="singleSelect:true">
+                    <thead>
+                        <tr>
+                            <th data-options="field:'varName', width:200, align:'center' ">变量名称</th>
+                            <th data-options="field:'varID',width:70, align:'center'">符号</th>
+                            <th data-options="field:'varValue',width:70, align:'center', editor:{type:'numberbox',options:{precision:1}}">数值</th>
+                            <th data-options="field:'varUnit',width:70, align:'center'">单位</th>
+                            <th data-options="field:'varMemo',width:200, align:'center'">备注</th>
+                        </tr>
+                    </thead>
+                </table>
+    <div id="div-ajax">not load</div>
+    <script type="text/javascript">
+    function doAjax(){
+    var obj = $.ajax({
+                url:'../do/test',
+                type:'GET',
+                data:null,
+                error: function(){alert('error');},
+                success:function(data){console.info(data);$("#dg").datagrid('loadData',data)}
+                });
+    }
+    function doAjax1(){
+        var rlt = $.post("ajax","",function(data){$("#div-ajax").html(data);});
+    }
+    </script>
+
 {% endblock %}

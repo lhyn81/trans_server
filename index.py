@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, jsonify
 from model.test import modinfo_test, modx_test, mody_test
 from model.cyclone import modinfo_cyclone, modx_cyclone, mody_cyclone
 from model.steam import modinfo_steam, modx_steam, mody_steam
@@ -14,10 +14,14 @@ def index():
     return render_template("home.html")
 
 
-@app.route('/show/<mod_name>', methods=['GET'])
+@app.route('/show/<mod_name>', methods=['GET', 'POST'])
 def show(mod_name):
     if mod_name == 'test':
-        return render_template("pages/show_steam.html", info=modinfo_test(), var=modx_test(), mod_name=mod_name)
+        return render_template("pages/show_test2.html")
+    if mod_name == 'ajax':
+        rlt = {'total': 10, 'rows':[{'varID': 'q', 'varName': '热量', 'varUnit': 'kJ/kg'}]}
+        #rlt = {'varID': 'q', 'varName': '热量', 'varUnit': 'kJ/kg'}
+        return jsonify(rlt)
     if mod_name == 'cyclone':
         return render_template("show.html", info=modinfo_cyclone(), var=modx_cyclone(), mod_name=mod_name)
     if mod_name == 'steam':

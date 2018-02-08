@@ -3,24 +3,28 @@
 
 <head>
 
+    <title>热机小助手</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="LH1981">
 
-    <title>热机小助手</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="../static/css/simple-sidebar.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="../static/css/simple-sidebar.css" >
+	<link rel="stylesheet" type="text/css" href="../static/easyui/themes/gray/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../static/easyui/themes/icon.css">
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="../static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../static/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../static/js/myjs.js"></script>
+    <!-- Menu Toggle Script -->
 </head>
 
 <body>
 
     <div id="wrapper" class="toggled">
+        
+        
 
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
@@ -62,7 +66,7 @@
                 <a href="#menu-toggle" class="btn btn-secondary btn-sm" id="menu-toggle" style="margin-left: 20px">隐藏/显示模型库</a>
                 <hr>
             </div>
-            <div style="margin-top: 30px" class="container-fluid">
+            <div style="margin-top: 30px" class="container-fluid" >
             {% block lh %}
             {% endblock %}
             </div>
@@ -70,11 +74,6 @@
 
     </div>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="../static/js/jquery.min.js"></script>
-    <script src="../static/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../static/js/myjs.js"></script>
-    <!-- Menu Toggle Script -->
 
 </body>
 
