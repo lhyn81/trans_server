@@ -9,16 +9,20 @@ from model.blue import modGroup, modItems
 app = Flask(__name__)
 
 
+# Show the main page, and load sidebar menus from blue
 @app.route('/')
 def index():
     return render_template("home.html",groupinfo=modGroup,modinfo=modItems)
 
 
-@app.route('/show/<mod_name>', methods=['GET','POST'])
+# Show the specified module page in the same format and style. Display the module information
+# and make ajax link pointing to the do/name page, which is the real calculation.
+@app.route('/show/<mod_name>', methods=['GET'])
 def show(mod_name):
     return render_template("show.html",groupinfo=modGroup,modinfo=modItems,info=modItems[mod_name])
 
 
+# From AJAX request. No html page need to load.
 @app.route('/do/<mod_name>', methods=['GET', 'POST'])
 def do(mod_name):
     x = request.form.to_dict()
@@ -29,25 +33,8 @@ def do(mod_name):
     rlt = {'total': lenth, 'rows':y}
     rlt = jsonify(rlt)
     return rlt
-    # if mod_name == 'test':
-    #     x = request.args.to_dict()
-    #     y = mody_test(x)
-    #     return render_template("do.html", var=y)
-    # if mod_name == 'cyclone':
-    #     x = request.form.to_dict()
-    #     y = mody_cyclone(x)
-    #     fn = export_docx(y)
-    #     return render_template("do.html", var=y, fn=fn)
-    # if mod_name == 'steam':
-    #     x = request.args.to_dict()
-    #     y = mody_steam(x)
-    #     return render_template("/pages/do_steam.html", var=y)
-    # if mod_name == 'biogasi01':
-    #     x = request.form.to_dict()
-    #     y = mody_aspen(x)
-    #     return render_template("do.html", var=y)
 
-
+# For VIP user to download the report.
 @app.route('/download/<fn>')
 def download(fn):
     filename = 'static/results/'+fn

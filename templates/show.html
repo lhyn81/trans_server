@@ -4,7 +4,7 @@
     <div class="alert alert-dark" align="left"><strong>模型介绍</strong></div>
     <p align="left">{{ info['modInfo']|safe }}</p>
     <div class="alert alert-dark" align="left"><strong>模型计算</strong></div>
-            <div class="easyui-panel" title='输入参数列表' style="width:100%;max-width:800px;padding:30px;" data-options="collapsible:true">
+            <div class="easyui-panel" title='输入参数列表' style="width:100%;padding:30px;" data-options="collapsible:true">
                 <div  style="margin-bottom: 10px;margin-left: 10px" >
                 <form id="modInput">
                 <table class="table table-bordered">
@@ -28,7 +28,10 @@
                 </div>
             </div>
     <hr>
-    <table class="easyui-datagrid" id="dg" title="计算结果" style="max-width:800px;height:500px" data-options="singleSelect:true">
+    <table class="easyui-datagrid" id="dg" title="计算结果" style="width:100%;height:auto" data-options="singleSelect:true,
+    collapsible:true,
+    pagination:false, 
+    rownumbers:true,">
                     <thead>
                         <tr>
                             <th data-options="field:'varName', width:250, align:'center'">变量名称</th>
@@ -50,9 +53,9 @@
             success:function(data){console.info(data);$("#dg").datagrid('loadData',data).datagrid-cell('font-size','15px')}
             });
     }
-    function doAjax1(){
-        var rlt = $.post("ajax","",function(data){$("#div-ajax").html(data);});
-    }
+    // function doAjax1(){
+    //     var rlt = $.post("ajax","",function(data){$("#div-ajax").html(data);});
+    // }
     </script>
 
 {% endblock %}
