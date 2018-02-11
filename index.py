@@ -39,7 +39,7 @@ def do(mod_name):
         x = request.form.to_dict()
         y = ts_get_stock(x)
         lenth = len(y[1])
-        rlt = {'total': lenth, 'rows':y[1], 'stockname':y[0]}
+        rlt = {'total': lenth, 'rows':y[1], 'stockname':y[0], 'fn':y[2]}
         rlt = jsonify(rlt)
         return rlt
     else:
