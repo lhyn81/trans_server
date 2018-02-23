@@ -10,8 +10,8 @@ modItems = {
 	'cyclone':{'modID':'cyclone','modName':'旋风分离器','modGroup':'通用模型库','modInfo':'','modVar':[],'modCalculator':'mody_cyclone'},
 	'gasifi' :{'modID':'gasifi','modName':'生物质气化产物计算','modGroup':'生物质模型库','modInfo':'','modVar':[],'modCalculator':'mody_aspen'},
 	'steam'  :{'modID':'steam','modName':'水蒸气参数查询','modGroup':'设计工具集','modInfo':'','modVar':[],'modCalculator':'mody_steam'},	
-        'devnote':{'modID':'devnote','modName':'开发备忘','modGroup':'其他','modInfo':'','modVar':[],'modCalculator':''},        
-        'stock':{'modID':'stock','modName':'股票信息检索','modGroup':'其他','modInfo':'','modVar':[],'modCalculator':''}        
+        'stock':{'modID':'stock','modName':'股票信息检索','modGroup':'其他','modInfo':'','modVar':[],'modCalculator':''},        
+        'devnote':{'modID':'devnote','modName':'开发备忘','modGroup':'其他','modInfo':'','modVar':[],'modCalculator':''}        
 }
 
 # 定义旋风分离器的参数信息

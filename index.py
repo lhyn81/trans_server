@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file, jsonify
+from flask import Flask, render_template, request, send_file, jsonify, session
 from model.cyclone import  mody_cyclone
 from model.steam import mody_steam
 from model.aspen_01 import mody_aspen
@@ -17,14 +17,30 @@ Markdown(app)
 @app.route('/')
 def index():
     return render_template("home.html",groupinfo=modGroup,modinfo=modItems)
+    # if 'user' in session:
+    #     return session['user']
+    # else:
+    #     return "not login"
 
 
 # Show the specified module page in the same format and style. Display the module information
 # and make ajax link pointing to the do/name page, which is the real calculation.
+@app.route('/login',methods=['GET','POST'])
+def login():
+    if request.method=="GET":
+        return render_template("pages/login.html")
+    else:
+        user =  request.form.to_dict()
+        userid = user['user']
+        pw = user['pwd']
+        session['user']=userid
+        return session['user']
+
+
 @app.route('/show/<mod_name>', methods=['GET'])
 def show(mod_name):
     if mod_name=='devnote':
-        return render_template("pages/note.html")
+        return render_template("pages/note.html",groupinfo=modGroup,modinfo=modItems,info=modItems[mod_name])
     elif mod_name=='stock':
         return render_template("pages/show_stock.html",groupinfo=modGroup,modinfo=modItems,info=modItems[mod_name])
     else:
@@ -51,6 +67,7 @@ def do(mod_name):
         rlt = {'total': lenth, 'rows':y}
         rlt = jsonify(rlt)
         return rlt
+    
 
 # For VIP user to download the report.
 @app.route('/download/<fn>')
@@ -60,4 +77,5 @@ def download(fn):
 
 
 if __name__ == '__main__':
+    app.secret_key="19811015"
     app.run(host='0.0.0.0', port=5000, debug=True)

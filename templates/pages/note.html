@@ -1,5 +1,7 @@
-{% filter markdown %}
+{% extends "base.html" %}
+{% block lh %}
 
+{% filter markdown %}
 #### 开发备忘录
 * <del>完成Flask基本构架</del>
 * <del>完成Bootstrap样式搭建</del>
@@ -14,8 +16,15 @@
 * <del>重新修改前端，居中，色彩柔和</del>
 * <del>生成requirements</del>
 * 废物焚烧计算模块编写
+* 用户功能
+* 普通模块、收费模块、用户数据的保存和加载
+* 算法、变量的class设计，继承关系设计，要考虑到变量和算法类型的扩展性
 * <del>股票数据分析模块</del>
 * 图像识别模块
 * 爬虫获取数据列表
-
+* 用python编写package
 {% endfilter %}
+
+{% endblock %}
+
+
