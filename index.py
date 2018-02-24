@@ -30,21 +30,27 @@ def login():
     if request.method=="GET":
         return render_template("pages/login.html")
     else:
-        user =  request.form.to_dict()
+        user = request.form.to_dict()
         userid = user['user']
         pw = user['pwd']
         session['user']=userid
-        return session['user']
+        return "Welcome " + session['user'] + "!"
 
 
 @app.route('/show/<mod_name>', methods=['GET'])
 def show(mod_name):
-    if mod_name=='devnote':
-        return render_template("pages/note.html",groupinfo=modGroup,modinfo=modItems,info=modItems[mod_name])
-    elif mod_name=='stock':
-        return render_template("pages/show_stock.html",groupinfo=modGroup,modinfo=modItems,info=modItems[mod_name])
-    else:
+    if modItems[mod_name]['modType']=='normal':
         return render_template("show.html",groupinfo=modGroup,modinfo=modItems,info=modItems[mod_name])
+    elif modItems[mod_name]['modType']=='custom':
+        return render_template("pages/show-"+mod_name+".html",groupinfo=modGroup,modinfo=modItems,info=modItems[mod_name])
+    else:
+        return "mod type error!"
+    # if mod_name=='devnote':
+    #     return render_template("pages/note.html",groupinfo=modGroup,modinfo=modItems,info=modItems[mod_name])
+    # elif mod_name=='stock':
+    #     return render_template("pages/show_stock.html",groupinfo=modGroup,modinfo=modItems,info=modItems[mod_name])
+    # else:
+    #     return render_template("show.html",groupinfo=modGroup,modinfo=modItems,info=modItems[mod_name])
 
 
 # From AJAX request. No html page need to load.
