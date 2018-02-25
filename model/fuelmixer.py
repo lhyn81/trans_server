@@ -1,81 +1,48 @@
-# CYCLONE
+# FuelMixer
 import math
 
 # 计算主体
-def mody_cyclone(x):
+def mody_fuelmixer(x):
     # 从字典提取变量
-    q0 = float(x['q0'])
-    t = float(x['t'])
-    vi = float(x['vi'])
-    den_g = float(x['den_g'])
-    mu = float(x['mu'])
-    den_p = float(x['den_p'])
-    Nc = float(x['Nc'])
-    n = float(x['n'])
-    dp1 = float(x['dp1'])
-    dp1_r = float(x['dp1_r'])
-    dp2 = float(x['dp2'])
-    dp2_r =float(x['dp2_r'])
-    dp3 =float(x['dp3'])
-    dp3_r =float(x['dp3_r'])
-    dp4 = float(x['dp4'])
-    dp4_r = float(x['dp4_r'])
-    dp5 = float(x['dp5'])
-    dp5_r = float(x['dp5_r'])
-
-    # 计算结果
-    q = q0*(t+273)/273
-    A = q/3600/vi
-    D0 = (q / 3600 / (1 * 0.44 * 0.21 * vi))**0.5
-    a = D0*0.44
-    b = D0*0.21
-    D = 2*(A/math.pi)**0.5
-    De = D0*0.4
-    hc = D0*0.5
-    h = D0*1.4
-    H = D0*3
-    D2 = D0*0.4
-    Cof_ZL = 16*a*b/De**2
-    den_gz = den_g*273/(t+273)
-    DP = Cof_ZL*vi**2/2*den_gz
-    tmp1 = (4*9.8*mu*(den_p-den_gz)/(3*den_gz**2))**0.33
-    Vs = 2.991*tmp1*((b/D0)**0.4/(1-b/D0)**0.33)*D0**0.067*vi**0.66
-    d50 = 10**6*(9*mu*b/(2*math.pi*Nc*vi*(den_p-den_gz)))**0.5
-    dp1_tmp = dp1/d50
-    dp2_tmp = dp2/d50
-    dp3_tmp = dp3/d50
-    dp4_tmp = dp4/d50
-    dp5_tmp = dp5/d50
-    dp1_tmp = 1-math.exp(-0.693*dp1_tmp**(1/(1+n)))
-    dp2_tmp = 1-math.exp(-0.693*dp2_tmp**(1/(1+n)))
-    dp3_tmp = 1-math.exp(-0.693*dp3_tmp**(1/(1+n)))
-    dp4_tmp = 1-math.exp(-0.693*dp4_tmp**(1/(1+n)))
-    dp5_tmp = 1-math.exp(-0.693*dp5_tmp**(1/(1+n)))
-    dp1_tmp = dp1_tmp*dp1_r
-    dp2_tmp = dp2_tmp*dp2_r
-    dp3_tmp = dp3_tmp*dp3_r
-    dp4_tmp = dp4_tmp*dp4_r
-    dp5_tmp = dp5_tmp*dp5_r
-    eff = dp1_tmp+dp2_tmp+dp3_tmp+dp4_tmp+dp5_tmp
+    data = [0]*100
+    for k,v in x.items():
+        head=k[:-1]
+        num=int(k[-1])
+        if head=='F': data[(num-1)*9]=v
+        elif head == 'C': data[(num-1)*9+1]=v
+        elif head == 'H': data[(num-1)*9+2]=v
+        elif head == 'O': data[(num-1)*9+3]=v
+        elif head == 'N': data[(num-1)*9+4]=v
+        elif head == 'S': data[(num-1)*9+5]=v
+        elif head == 'CL': data[(num-1)*9+6]=v
+        elif head == 'A': data[(num-1)*9+7]=v
+        elif head == 'W': data[(num-1)*9+8]=v
+    # print(data)
+    TF=C=H=O=N=S=CL=A=W=0
+    for i in range(0,90,9):
+        TF = TF + float(data[i])
+        C=C+float(data[i])*float(data[i+1])
+        H=H+float(data[i])*float(data[i+2])
+        O=O+float(data[i])*float(data[i+3])
+        N=N+float(data[i])*float(data[i+4])
+        S=S+float(data[i])*float(data[i+5])
+        CL=CL+float(data[i])*float(data[i+6])
+        A=A+float(data[i])*float(data[i+7])
+        W=W+float(data[i])*float(data[i+8])
+        Total=C+H+O+N+S+CL+A+W
 
 # 建立输出变量，生成结构体
     modvar_data = [
-        {'varID': 'A', 'varType': '尺寸参数', 'varName': '入口面积', 'varVal': "%.3f" % A, 'varUnit': 'm', 'varMemo': ''},
-        {'varID': 'D0', 'varType': '尺寸参数', 'varName': '旋风分离器直径', 'varVal': "%.3f" % D0, 'varUnit': 'm', 'varMemo': ''},
-        {'varID': 'a', 'varType': '尺寸参数', 'varName': '入口高', 'varVal': "%.3f" % a, 'varUnit': 'm', 'varMemo': ''},
-        {'varID': 'b', 'varType': '尺寸参数', 'varName': '入口宽', 'varVal': "%.3f" % b, 'varUnit': 'm', 'varMemo': ''},
-        {'varID': 'D', 'varType': '尺寸参数', 'varName': '入口当量直径', 'varVal': "%.3f" % D, 'varUnit': 'm', 'varMemo': ''},
-        {'varID': 'De', 'varType': '尺寸参数', 'varName': '排气管直径', 'varVal': "%.3f" % De, 'varUnit': 'm', 'varMemo': ''},
-        {'varID': 'hc', 'varType': '尺寸参数', 'varName': '排气管插入深度', 'varVal': "%.3f" % hc, 'varUnit': 'm', 'varMemo': ''},
-        {'varID': 'h', 'varType': '尺寸参数', 'varName': '旋风分离器筒体高', 'varVal': "%.3f" % h, 'varUnit': 'm', 'varMemo': ''},
-        {'varID': 'H', 'varType': '尺寸参数', 'varName': '旋风分离器总高', 'varVal': "%.3f" % H, 'varUnit': 'm', 'varMemo': ''},
-        {'varID': 'D2', 'varType': '尺寸参数', 'varName': '排灰管直径', 'varVal': "%.3f" % D2, 'varUnit': 'm', 'varMemo': ''},
-        {'varID': 'dp1_eff', 'varType': '评价参数', 'varName': '#1分离效率', 'varVal': "%.3f" % dp1_tmp, 'varUnit': '-', 'varMemo': ''},
-        {'varID': 'dp2_eff', 'varType': '评价参数', 'varName': '#2分离效率', 'varVal': "%.3f" % dp2_tmp, 'varUnit': '-', 'varMemo': ''},
-        {'varID': 'dp3_eff', 'varType': '评价参数', 'varName': '#3分离效率', 'varVal': "%.3f" % dp3_tmp, 'varUnit': '-', 'varMemo': ''},
-        {'varID': 'dp4_eff', 'varType': '评价参数', 'varName': '#4分离效率', 'varVal': "%.3f" % dp4_tmp, 'varUnit': '-', 'varMemo': ''},
-        {'varID': 'dp5_eff', 'varType': '评价参数', 'varName': '#5分离效率', 'varVal': "%.3f" % dp5_tmp, 'varUnit': '-', 'varMemo': ''},
-        {'varID': 'eff', 'varType': '评价参数', 'varName': '平均分离效率', 'varVal': "%.3f" % eff, 'varUnit': '-', 'varMemo': ''},
+        {'varID': 'TF', 'varType': '燃料数据', 'varName': '混合原料质量总量', 'varVal': "%.5f" % TF, 'varUnit': '1', 'varMemo': '应为1.0'},
+        {'varID': 'C', 'varType': '燃料数据', 'varName': '混合原料C质量分数', 'varVal': "%.5f" % C, 'varUnit': '1', 'varMemo': '0到1之间'},
+        {'varID': 'H', 'varType': '燃料数据', 'varName': '混合原料H质量分数', 'varVal': "%.5f" % H, 'varUnit': '1', 'varMemo': '0到1之间'},
+        {'varID': 'O', 'varType': '燃料数据', 'varName': '混合原料O质量分数', 'varVal': "%.5f" % O, 'varUnit': '1', 'varMemo': '0到1之间'},
+        {'varID': 'N', 'varType': '燃料数据', 'varName': '混合原料N质量分数', 'varVal': "%.5f" % N, 'varUnit': '1', 'varMemo': '0到1之间'},
+        {'varID': 'S', 'varType': '燃料数据', 'varName': '混合原料S质量分数', 'varVal': "%.5f" % S, 'varUnit': '1', 'varMemo': '0到1之间'},
+        {'varID': 'CL', 'varType': '燃料数据', 'varName': '混合原料CL质量分数', 'varVal': "%.5f" % CL, 'varUnit': '1', 'varMemo': '0到1之间'},
+        {'varID': 'A', 'varType': '燃料数据', 'varName': '混合原料A质量分数', 'varVal': "%.5f" % A, 'varUnit': '1', 'varMemo': '0到1之间'},
+        {'varID': 'W', 'varType': '燃料数据', 'varName': '混合原料W质量分数', 'varVal': "%.5f" % W, 'varUnit': '1', 'varMemo': '0到1之间'},
+        {'varID': 'Total', 'varType': '燃料数据', 'varName': '混合原料元素总量', 'varVal': "%.5f" % Total, 'varUnit': '1', 'varMemo': '0到1之间'}
     ]
 
     return modvar_data

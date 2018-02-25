@@ -253,8 +253,16 @@
       "modGroup": "生物质模型库",
       "modType": "normal",
       "modInfo": "模型计算多种单一原料混合后的元素分析数据",
-      "modCalculator": "mody_",
+      "modCalculator": "mody_fuelmixer",
       "modVar": [
+        {
+          "varID": "F1",
+          "varType": "single",
+          "varName": "#1原料质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
         {
           "varID": "C1",
           "varType": "single",
@@ -296,6 +304,14 @@
           "varMemo": ""
         },
         {
+          "varID": "CL1",
+          "varType": "single",
+          "varName": "#1原料CL元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
           "varID": "A1",
           "varType": "single",
           "varName": "#1原料灰分质量分数",
@@ -307,6 +323,14 @@
           "varID": "W1",
           "varType": "single",
           "varName": "#1原料水分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "F2",
+          "varType": "single",
+          "varName": "#2原料质量分数",
           "varVal": "0.0",
           "varUnit": 1,
           "varMemo": ""
@@ -352,6 +376,14 @@
           "varMemo": ""
         },
         {
+          "varID": "CL2",
+          "varType": "single",
+          "varName": "#2原料CL元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
           "varID": "A2",
           "varType": "single",
           "varName": "#2原料灰分质量分数",
@@ -363,6 +395,14 @@
           "varID": "W2",
           "varType": "single",
           "varName": "#2原料水分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "F3",
+          "varType": "single",
+          "varName": "#3原料质量分数",
           "varVal": "0.0",
           "varUnit": 1,
           "varMemo": ""
@@ -408,6 +448,14 @@
           "varMemo": ""
         },
         {
+          "varID": "CL3",
+          "varType": "single",
+          "varName": "#3原料CL元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
           "varID": "A3",
           "varType": "single",
           "varName": "#3原料灰分质量分数",
@@ -419,6 +467,14 @@
           "varID": "W3",
           "varType": "single",
           "varName": "#3原料水分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "F4",
+          "varType": "single",
+          "varName": "#4原料质量分数",
           "varVal": "0.0",
           "varUnit": 1,
           "varMemo": ""
@@ -464,6 +520,14 @@
           "varMemo": ""
         },
         {
+          "varID": "CL4",
+          "varType": "single",
+          "varName": "#4原料CL元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
           "varID": "A4",
           "varType": "single",
           "varName": "#4原料灰分质量分数",
@@ -475,6 +539,14 @@
           "varID": "W4",
           "varType": "single",
           "varName": "#4原料水分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "F5",
+          "varType": "single",
+          "varName": "#5原料质量分数",
           "varVal": "0.0",
           "varUnit": 1,
           "varMemo": ""
@@ -520,6 +592,14 @@
           "varMemo": ""
         },
         {
+          "varID": "CL5",
+          "varType": "single",
+          "varName": "#5原料CL元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
           "varID": "A5",
           "varType": "single",
           "varName": "#5原料灰分质量分数",
@@ -531,6 +611,14 @@
           "varID": "W5",
           "varType": "single",
           "varName": "#5原料水分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "F6",
+          "varType": "single",
+          "varName": "#6原料质量分数",
           "varVal": "0.0",
           "varUnit": 1,
           "varMemo": ""
@@ -576,6 +664,14 @@
           "varMemo": ""
         },
         {
+          "varID": "CL6",
+          "varType": "single",
+          "varName": "#6原料CL元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
           "varID": "A6",
           "varType": "single",
           "varName": "#6原料灰分质量分数",
@@ -587,6 +683,14 @@
           "varID": "W6",
           "varType": "single",
           "varName": "#6原料水分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "F7",
+          "varType": "single",
+          "varName": "#7原料质量分数",
           "varVal": "0.0",
           "varUnit": 1,
           "varMemo": ""
@@ -632,6 +736,14 @@
           "varMemo": ""
         },
         {
+          "varID": "CL7",
+          "varType": "single",
+          "varName": "#7原料CL元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
           "varID": "A7",
           "varType": "single",
           "varName": "#7原料灰分质量分数",
@@ -643,6 +755,14 @@
           "varID": "W7",
           "varType": "single",
           "varName": "#7原料水分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "F8",
+          "varType": "single",
+          "varName": "#8原料质量分数",
           "varVal": "0.0",
           "varUnit": 1,
           "varMemo": ""
@@ -688,6 +808,14 @@
           "varMemo": ""
         },
         {
+          "varID": "CL8",
+          "varType": "single",
+          "varName": "#8原料CL元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
           "varID": "A8",
           "varType": "single",
           "varName": "#8原料灰分质量分数",
@@ -699,6 +827,14 @@
           "varID": "W8",
           "varType": "single",
           "varName": "#8原料水分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "F9",
+          "varType": "single",
+          "varName": "#9原料质量分数",
           "varVal": "0.0",
           "varUnit": 1,
           "varMemo": ""
@@ -739,6 +875,14 @@
           "varID": "S9",
           "varType": "single",
           "varName": "#9原料S元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "CL9",
+          "varType": "single",
+          "varName": "#9原料CL元素质量分数",
           "varVal": "0.0",
           "varUnit": 1,
           "varMemo": ""

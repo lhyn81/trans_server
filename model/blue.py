@@ -7,5 +7,5 @@ modGroup = modbody["modGroup"]
 modItems = modbody["modItems"]
 
 # Debug
-for k in modItems:
-	print(k)
+# for k in modItems:
+# 	print(k)

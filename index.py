@@ -2,14 +2,17 @@ from flask import Flask, render_template, request, send_file, jsonify, session
 from model.cyclone import  mody_cyclone
 from model.steam import mody_steam
 from model.aspen_01 import mody_aspen
+from model.fuelmixer import mody_fuelmixer
 from model.stock import ts_get_stock
 from model.utils import export_docx
 from model.blue import modGroup, modItems 
 from flaskext.markdown import Markdown
+from flask_debugtoolbar import DebugToolbarExtension
 import json
 
 
 app = Flask(__name__)
+app.debug = True
 Markdown(app)
 
 # Show the main page, and load sidebar menus from blue
@@ -73,4 +76,5 @@ def download(fn):
 
 if __name__ == '__main__':
     app.secret_key="19811015"
+    toolbar = DebugToolbarExtension(app)
     app.run(host='0.0.0.0', port=5000, debug=True)
