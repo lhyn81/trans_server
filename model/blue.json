@@ -246,6 +246,521 @@
         }
       ]
     },
+    "fuelmixer": {
+      "modID": "fuelmixer",
+      "modLv": "free",
+      "modName": "原料混合计算",
+      "modGroup": "生物质模型库",
+      "modType": "normal",
+      "modInfo": "模型计算多种单一原料混合后的元素分析数据",
+      "modCalculator": "mody_",
+      "modVar": [
+        {
+          "varID": "C1",
+          "varType": "single",
+          "varName": "#1原料C元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "H1",
+          "varType": "single",
+          "varName": "#1原料H元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "O1",
+          "varType": "single",
+          "varName": "#1原料O元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "N1",
+          "varType": "single",
+          "varName": "#1原料N元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "S1",
+          "varType": "single",
+          "varName": "#1原料S元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "A1",
+          "varType": "single",
+          "varName": "#1原料灰分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "W1",
+          "varType": "single",
+          "varName": "#1原料水分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "C2",
+          "varType": "single",
+          "varName": "#2原料C元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "H1",
+          "varType": "single",
+          "varName": "#2原料H元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "O2",
+          "varType": "single",
+          "varName": "#2原料O元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "N2",
+          "varType": "single",
+          "varName": "#2原料N元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "S2",
+          "varType": "single",
+          "varName": "#2原料S元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "A2",
+          "varType": "single",
+          "varName": "#2原料灰分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "W2",
+          "varType": "single",
+          "varName": "#2原料水分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "C3",
+          "varType": "single",
+          "varName": "#3原料C元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "H3",
+          "varType": "single",
+          "varName": "#3原料H元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "O3",
+          "varType": "single",
+          "varName": "#3原料O元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "N3",
+          "varType": "single",
+          "varName": "#3原料N元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "S3",
+          "varType": "single",
+          "varName": "#3原料S元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "A3",
+          "varType": "single",
+          "varName": "#3原料灰分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "W3",
+          "varType": "single",
+          "varName": "#3原料水分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "C4",
+          "varType": "single",
+          "varName": "#4原料C元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "H4",
+          "varType": "single",
+          "varName": "#4原料H元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "O4",
+          "varType": "single",
+          "varName": "#4原料O元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "N4",
+          "varType": "single",
+          "varName": "#4原料N元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "S4",
+          "varType": "single",
+          "varName": "#4原料S元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "A4",
+          "varType": "single",
+          "varName": "#4原料灰分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "W4",
+          "varType": "single",
+          "varName": "#4原料水分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "C5",
+          "varType": "single",
+          "varName": "#5原料C元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "H5",
+          "varType": "single",
+          "varName": "#5原料H元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "O5",
+          "varType": "single",
+          "varName": "#5原料O元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "N5",
+          "varType": "single",
+          "varName": "#5原料N元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "S5",
+          "varType": "single",
+          "varName": "#5原料S元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "A5",
+          "varType": "single",
+          "varName": "#5原料灰分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "W5",
+          "varType": "single",
+          "varName": "#5原料水分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "C6",
+          "varType": "single",
+          "varName": "#6原料C元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "H6",
+          "varType": "single",
+          "varName": "#6原料H元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "O6",
+          "varType": "single",
+          "varName": "#6原料O元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "N6",
+          "varType": "single",
+          "varName": "#6原料N元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "S6",
+          "varType": "single",
+          "varName": "#6原料S元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "A6",
+          "varType": "single",
+          "varName": "#6原料灰分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "W6",
+          "varType": "single",
+          "varName": "#6原料水分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "C7",
+          "varType": "single",
+          "varName": "#7原料C元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "H7",
+          "varType": "single",
+          "varName": "#7原料H元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "O7",
+          "varType": "single",
+          "varName": "#7原料O元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "N7",
+          "varType": "single",
+          "varName": "#7原料N元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "S7",
+          "varType": "single",
+          "varName": "#7原料S元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "A7",
+          "varType": "single",
+          "varName": "#7原料灰分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "W7",
+          "varType": "single",
+          "varName": "#7原料水分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "C8",
+          "varType": "single",
+          "varName": "#8原料C元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "H8",
+          "varType": "single",
+          "varName": "#8原料H元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "O8",
+          "varType": "single",
+          "varName": "#8原料O元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "N8",
+          "varType": "single",
+          "varName": "#8原料N元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "S8",
+          "varType": "single",
+          "varName": "#8原料S元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "A8",
+          "varType": "single",
+          "varName": "#8原料灰分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "W8",
+          "varType": "single",
+          "varName": "#8原料水分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "C9",
+          "varType": "single",
+          "varName": "#9原料C元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "H9",
+          "varType": "single",
+          "varName": "#9原料H元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "O9",
+          "varType": "single",
+          "varName": "#9原料O元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "N9",
+          "varType": "single",
+          "varName": "#9原料N元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "S9",
+          "varType": "single",
+          "varName": "#9原料S元素质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "A9",
+          "varType": "single",
+          "varName": "#9原料灰分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        },
+        {
+          "varID": "W9",
+          "varType": "single",
+          "varName": "#9原料水分质量分数",
+          "varVal": "0.0",
+          "varUnit": 1,
+          "varMemo": ""
+        }
+      ]
+    },
     "steam": {
       "modID": "steam",
       "modLv": "free",

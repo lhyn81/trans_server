@@ -3,7 +3,11 @@
 
     <div class="alert alert-dark" align="left"><strong>模型介绍</strong></div>
     <p align="left">{{ info['modInfo']|safe }}</p>
-    <div class="alert alert-dark" align="left"><strong>模型计算</strong></div>
+    <div class="alert alert-dark" align="left"><strong>模型计算</strong>
+                    <input type="file" id="fileToLoad" onchange="loadFileAsText();" style="font-size:10px; float: right;">
+                    <button id="_save" onclick="dbsave();" style="font-size:10px; float: right;">保存数据</button>
+<!--                     <button id="_load" onclick="loadFileAsText();" style="font-size:6px; float: right;">读取数据</button>
+ -->    </div>
             <div class="easyui-panel" title='输入参数列表' style="width:100%;padding:30px;" data-options="collapsible:true">
                 <div  style="margin-bottom: 10px;margin-left: 10px" >
                 <form id="modInput">
@@ -24,7 +28,9 @@
                     </tbody>
                 </table>
                 </form>
-                <center><button href="javascript:void(0)" "id="btn-do" onclick="doAjax();" class="btn btn-primary" style="width:3cm">计  算</button></center>
+                <center>
+                    <button id="btn-do" onclick="doAjax();" class="btn btn-primary" style="width:3cm">计  算</button>
+                </center>
                 </div>
             </div>
     <hr>
@@ -44,6 +50,7 @@
                 </table>
 
     <script type="text/javascript">
+
     function doAjax(){
         $.ajax({
             url:'{{ '/do/'+info['modID'] }}',
@@ -53,9 +60,69 @@
             success:function(data){console.info(data);$("#dg").datagrid('loadData',data).datagrid-cell('font-size','15px')}
             });
     }
-    // function doAjax1(){
-    //     var rlt = $.post("ajax","",function(data){$("#div-ajax").html(data);});
-    // }
+
+    function dbsave(){
+        var $elements = {};
+        $("#modInput input").each(function() {
+            var name = $(this).attr("name");
+            var value = $(this).val();
+            $elements[name] = value;
+            // alert(type);
+          // }
+        });
+        var data = JSON.stringify($elements);
+        localStorage["form_data"] = data;
+        console.log(data);
+        saveTextAsFile(data);
+    }
+
+    function dbload(){
+        // data = JSON.parse(localStorage["form_data"])
+        data = loadFileAsText();
+        console.log(data);
+        $("#modInput input").each(function() {
+            // $(this).val(localStorage["form_data"][$(this).attr("name")])    
+            $(this).val(data[$(this).attr("name")])    
+        });
+    }
+
+    function saveTextAsFile(content)
+    {
+        // var textToSave = document.getElementById("inputTextToSave").value;
+        var textToSaveAsBlob = new Blob([content], {type:"text/plain"});
+        var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+        var fileNameToSaveAs = "{{ info['modName'] }}"+"input.dat";
+        var downloadLink = document.createElement("a");
+        downloadLink.download = fileNameToSaveAs;
+        downloadLink.innerHTML = "Download File";
+        downloadLink.href = textToSaveAsURL;
+        downloadLink.onclick = destroyClickedElement;
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+    }
+
+    function destroyClickedElement(event)
+    {
+        document.body.removeChild(event.target);
+    }
+
+    function loadFileAsText()
+    {
+        var fileToLoad = document.getElementById("fileToLoad").files[0];
+        var fileReader = new FileReader();
+        var content;
+        fileReader.onload = function(e,content) 
+        {
+            data = JSON.parse(e.target.result);
+            $("#modInput input").each(function() {
+            $(this).val(data[$(this).attr("name")])    
+            });
+        };
+        fileReader.readAsText(fileToLoad, "UTF-8");
+    }
+
+
     </script>
 
 {% endblock %}

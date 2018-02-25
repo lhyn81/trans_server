@@ -12,7 +12,6 @@ import json
 app = Flask(__name__)
 Markdown(app)
 
-
 # Show the main page, and load sidebar menus from blue
 @app.route('/')
 def index():
@@ -21,7 +20,6 @@ def index():
     #     return session['user']
     # else:
     #     return "not login"
-
 
 # Show the specified module page in the same format and style. Display the module information
 # and make ajax link pointing to the do/name page, which is the real calculation.
@@ -36,7 +34,6 @@ def login():
         session['user']=userid
         return "Welcome " + session['user'] + "!"
 
-
 @app.route('/show/<mod_name>', methods=['GET'])
 def show(mod_name):
     if modItems[mod_name]['modType']=='normal':
@@ -45,13 +42,6 @@ def show(mod_name):
         return render_template("pages/show-"+mod_name+".html",groupinfo=modGroup,modinfo=modItems,info=modItems[mod_name])
     else:
         return "mod type error!"
-    # if mod_name=='devnote':
-    #     return render_template("pages/note.html",groupinfo=modGroup,modinfo=modItems,info=modItems[mod_name])
-    # elif mod_name=='stock':
-    #     return render_template("pages/show_stock.html",groupinfo=modGroup,modinfo=modItems,info=modItems[mod_name])
-    # else:
-    #     return render_template("show.html",groupinfo=modGroup,modinfo=modItems,info=modItems[mod_name])
-
 
 # From AJAX request. No html page need to load.
 @app.route('/do/<mod_name>', methods=['GET', 'POST'])
@@ -73,14 +63,13 @@ def do(mod_name):
         rlt = {'total': lenth, 'rows':y}
         rlt = jsonify(rlt)
         return rlt
-    
+
 
 # For VIP user to download the report.
 @app.route('/download/<fn>')
 def download(fn):
     filename = 'static/results/'+fn
     return send_file(filename, as_attachment=True)
-
 
 if __name__ == '__main__':
     app.secret_key="19811015"
