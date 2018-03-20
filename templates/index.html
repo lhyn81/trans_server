@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" style="z-index:1000" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <!-- <link rel="stylesheet" type="text/css" href="./css/api.css" />-->
+    <!-- <script src="./script/api.js"></script> -->
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css">
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+</head>
+
+<body>
+
+<!-- ************************** HOME PAGE ****************************** -->
+
+      <div data-role="page" id="main">
+
+        <div data-role="header" data-theme="b" data-position="fixed" data-tap-toggle="false">
+         <!-- <a href="#info" data-role="button" data-rel="dialog" data-icon="info" data-theme="b">说明</a> -->
+          <p>佛教词汇翻译助手</p>
+          <!-- <a href="#" data-role="button" data-icon="home" data-theme="b">注销</a> -->
+        </div>
+
+        <div data-role="content" id="main_content">
+            <fieldset data-role="controlgroup">
+            <input type="radio" name="radio-choice" id="radio-choice-1" value="admin" checked="checked" />
+            <label for="radio-choice-1">管理员</label>
+
+            <input type="radio" name="radio-choice" id="radio-choice-2" value="user"  />
+            <label for="radio-choice-2">用户</label>
+            </fieldset>
+
+            <label for="pwd">请输入密码</label>
+            <input type="password" name="pwd" id="pwd" />
+            <a href="#" onclick="logon()" data-role="button" onclick="#" >登录</a>
+            <hr>
+           <p>说明：本APP可查询佛教词汇的英文、法文、梵文、藏文的释义。仅供翻译中心内部参考，未经允许不得对外传播。输入相应身份密码登陆后可进行查询。用户只能进行查询，管理员可以对词库进行增加、修改、删除。</p>
+        </div>
+
+        <div data-role="content" id="query_content">
+          <form method="post" action="demoform.asp">
+          <div data-role="fieldcontain">
+          <input type="search" name="search" id="search" placeholder="请输入词语">
+          </div>
+          <center><input type="button" onclick="query()" data-inline="true" value="查询"></center>
+          </form>
+          <div data-role="collapsible-set" data-content-theme="d" id="result">
+          </div>
+        </div>
+
+        <div data-role="content" id="info_content" data-theme="a">
+          palapala
+        </div>
+
+         <div data-role="footer" data-theme="b" data-position="fixed">
+          <p>仅供内部使用</p>
+        </div>
+
+      </div>
+
+<!-- ************************** QUERY PAGE ****************************** -->
+
+      <div data-role="page" id="query">
+
+        <div data-role="header" data-theme="a" data-position="fixed" data-tap-toggle="false">
+         <!-- <a href="#info" data-role="button" data-rel="dialog" data-icon="info" data-theme="b">说明</a> -->
+          <p>佛教词汇翻译助手</p>
+          <!-- <a href="#" data-role="button" data-icon="home" data-theme="b">注销</a> -->
+        </div>
+
+        <div data-role="footer" data-theme="b" data-position="fixed">
+        <p>仅供内部使用</p>
+        </div>
+
+      </div>
+
+<!-- ************************** LOGIN PAGE ****************************** -->
+
+      <div data-role="page" id="info">
+
+        <div data-role="header" data-theme="a">
+          <p>声明</p>
+        </div>
+
+      </div>
+
+<!-- ************************** SCRIPT ****************************** -->
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+          $("#main_content").show();
+          $("#query_content").hide();
+          $("#info_content").hide();
+        });
+
+      function logon(){
+        pw=$("#pwd").val();
+        ur=$("input[name='radio-choice']:checked").val();
+        // $.get("http://127.0.0.1:5000/mobile/test?a=" + pw , function(data){return data;});
+        // alert(rlt);
+        $.ajax({
+        url: "/login",
+        async:false,
+        data: { user:ur , password:pw },
+        // success: function (data){$("#main_content").load("pages/query.html");}
+        success: function (data){
+          switch (data)
+          {
+            case "admin":
+              $("#main_content").hide();
+              $("#query_content").show();
+              break;
+            case "user":
+              $("#main_content").hide();
+              $("#query_content").show();
+              // $("#query_content").load("newword.html")
+              break;
+            case "error":
+              alert("密码错误！请联系兰天。");
+              break;
+            default:
+              alert("服务器连接有问题");
+          }
+        }
+        });
+      }
+
+      function query(){
+        wd=$("#search").val();
+        $.ajax({
+        url: "/query",
+        async:false,
+        dataType: "json",
+        data: { word:wd },
+        success: function (data){
+          
+          $("#result").html("");
+          $("#result").append("<p><br>包含该单词的结果数量：" + data.length + "条</br></p>");
+          $.each(data, function(i, order){
+            // var content = "<div data-role='collapsible' id='set" + i + "'><h3>Result " + i + "</h3>" +
+            // "<label for='中文'>中文:</label>"+
+            // "<input type='text' id='中文' value=" + data[i].中文 + "><br>" +
+            // "<label for='法文'>法文:</label>"+
+            // "<input type='text' id='法文' value=" + data[i].法文 + "><br>" +
+            // "<label for='梵文'>梵文:</label>"+
+            // "<input type='text' id='梵文' value=" + data[i].梵文 + "><br>" +
+            // "<label for='英文'>英文:</label>"+
+            // "<input type='text' id='英文' value=" + data[i].英文 + "><br>" +
+            // "</div>";
+            // $("#result").append(content).collapsibleset('refresh');
+            var content = "<hr>" +
+            "<form method='post' action='#'>"+
+            "<label for='中文'>中文:</label>"+
+            "<input type='text' id='中文' value=" + data[i].中文 + "><br>" +
+            "<label for='法文'>法文:</label>"+
+            "<input type='text' id='法文' value=" + data[i].法文 + "><br>" +
+            "<label for='梵文'>梵文:</label>"+
+            "<input type='text' id='梵文' value=" + data[i].梵文 + "><br>" +
+            "<label for='英文'>英文:</label>"+
+            "<input type='text' id='英文' value=" + data[i].英文 + "><br>" +
+            "<div data-role='button' data-theme='b'>修改</div>"+
+            "</form>";
+            $("#result").append(content);
+          });
+        }
+        });
+      }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,80 +1,49 @@
 from flask import Flask, render_template, request, send_file, jsonify, session
-from model.cyclone import  mody_cyclone
-from model.steam import mody_steam
-from model.aspen_01 import mody_aspen
-from model.fuelmixer import mody_fuelmixer
-from model.stock import ts_get_stock
-from model.utils import export_docx
-from model.blue import modGroup, modItems 
 from flaskext.markdown import Markdown
-from flask_debugtoolbar import DebugToolbarExtension
+from flask_cors import *
+from model.handlejson import writejson, readjson, queryjson
 import json
+import xlrd
 
 
 app = Flask(__name__)
-app.debug = True
-Markdown(app)
+CORS(app,supports_credentials=True)
 
-# Show the main page, and load sidebar menus from blue
+#--------------------移动端---------------------------
+
 @app.route('/')
 def index():
-    return render_template("home.html",groupinfo=modGroup,modinfo=modItems)
-    # if 'user' in session:
-    #     return session['user']
-    # else:
-    #     return "not login"
+    return render_template("index.html")
 
-# Show the specified module page in the same format and style. Display the module information
-# and make ajax link pointing to the do/name page, which is the real calculation.
-@app.route('/login',methods=['GET','POST'])
+@app.route('/login')
 def login():
-    if request.method=="GET":
-        return render_template("pages/login.html")
+    rlt = ""
+    u=request.args.get("user")
+    p=request.args.get("password")
+    if u=="admin" and p=="841110":
+        rlt = "admin"
+    elif u=="user" and p=="fyzx":
+        rlt = "user"
     else:
-        user = request.form.to_dict()
-        userid = user['user']
-        pw = user['pwd']
-        session['user']=userid
-        return "Welcome " + session['user'] + "!"
+        rlt = "error"
+    return rlt
 
-@app.route('/show/<mod_name>', methods=['GET'])
-def show(mod_name):
-    if modItems[mod_name]['modType']=='normal':
-        return render_template("show.html",groupinfo=modGroup,modinfo=modItems,info=modItems[mod_name])
-    elif modItems[mod_name]['modType']=='custom':
-        return render_template("pages/show-"+mod_name+".html",groupinfo=modGroup,modinfo=modItems,info=modItems[mod_name])
-    else:
-        return "mod type error!"
-
-# From AJAX request. No html page need to load.
-@app.route('/do/<mod_name>', methods=['GET', 'POST'])
-def do(mod_name):
-    if mod_name=='stock':
-        # stockid = request.form.get('stockid')
-        x = request.form.to_dict()
-        y = ts_get_stock(x)
-        lenth = len(y[1])
-        rlt = {'total': lenth, 'rows':y[1], 'stockname':y[0], 'fn':y[2]}
-        rlt = jsonify(rlt)
-        return rlt
-    else:
-        x = request.form.to_dict()
-        Calculator = modItems[mod_name]['modCalculator']
-        print(Calculator)
-        y = globals()[Calculator](x)
-        lenth = len(y)
-        rlt = {'total': lenth, 'rows':y}
-        rlt = jsonify(rlt)
-        return rlt
+@app.route('/query')
+def query():
+    word=request.args.get("word")
+    rlt=queryjson(word)
+    return jsonify(rlt)
 
 
-# For VIP user to download the report.
-@app.route('/download/<fn>')
-def download(fn):
-    filename = 'static/results/'+fn
-    return send_file(filename, as_attachment=True)
+@app.route('/admin/<method>')
+def admin(method):
+    if method=='restart':
+        writejson()
+        return 'dict restarted!'
+
+#--------------------主程序---------------------------
 
 if __name__ == '__main__':
     app.secret_key="19811015"
-    toolbar = DebugToolbarExtension(app)
-    app.run(host='0.0.0.0', port=5000, debug=True)
+
+    app.run(host='0.0.0.0', port=7321, debug=True)
