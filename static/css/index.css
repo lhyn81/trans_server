@@ -1,0 +1,190 @@
+/*设置全局的属性*/
+*{
+    padding: 0px;
+    margin: 0px;
+}
+/*设置a标签中字体的颜色*/
+a{
+    color: black;
+}
+/*设置整个网页的背景图片*/
+body{
+    background: url("../imgs/bg.jpg");
+    background-size: cover;
+}
+
+/*头部*/
+#header{
+    background-color: rgba(255,255,255,0.3);
+    /*对齐方式*/
+    text-align: right;
+    /*垂直居中line-height:height*/
+    height: 38px;
+    line-height: 38px;
+
+    /*设置外边距*/
+    margin: 0 0 30px;
+}
+
+/*header中的a*/
+#header a{
+    /*右边间距*/
+    margin-right: 8px;
+    /*加粗*/
+    font-weight: bold;
+    font-family: Arial;
+    font-size: 15px;
+    /*字体颜色*/
+    color: black;
+}
+
+/*设置标题中后三个标题中的两个标题模式*/
+#header a.no-weight{
+    font-weight: normal;
+}
+/*设置最后一个标题的模式*/
+#header a.more-product{
+    /*背景颜色*/
+    background-color: #3385ff;
+    color: white;
+    /*去除下划线*/
+    text-decoration: none;
+    /*设置内边距*/
+    padding: 5px;
+}
+
+/*中间内容*/
+#content{
+   /*background-color: green;*/
+}
+
+/*中间内容的头部*/
+.content-top{
+    /*水平居中*/
+    text-align: center;
+}
+/*设置头部图片的大小*/
+.content-top img{
+    width: 270px;
+}
+/*设置中间内容的底部(输入框)*/
+.content-bottom{
+    background-color: red;
+    /*高度和宽度*/
+    width: 600px;
+    height: 38px;
+    /*水平居中*/
+    margin: 10px auto 30px;
+}
+
+/*设置输入框的大小*/
+.content-bottom input{
+    /*高度和宽度*/
+    width: 500px;
+    height: 38px;
+    /*边框*/
+    border: 1px solid #dddddd;
+
+    /*向内扩展*/
+    box-sizing: border-box;
+
+    /*左边间距*/
+    padding-left: 8px;
+    /*字体大小*/
+    font-size: 15px;
+}
+/*设置百度一下的字体(focus:当鼠标点击的时候获得焦点)*/
+.content-bottom input:focus{
+
+    /*outline: none;*/
+    text-decoration: none;
+    /*设置边框*/
+    border: 1px solid #3385ff;
+}
+
+/*设置百度一下的字体*/
+.content-bottom a{
+    /*处理背景颜色*/
+    background-color: #007DBD;
+    /*改变标签的类型(段内块级标签)*/
+    display: inline-block;
+    /*设置宽度和高度(设置完后文字会跑下来,因为整个框容纳不了,所以会超出来)*/
+    width: 100px;
+    height: 38px;
+    /*设置浮动方向*/
+    float: right;
+    /*设置水平垂直居中*/
+    text-align: center;
+    /*这里要和高度一样*/
+    line-height: 38px;
+    /*设置字体*/
+    color: white;
+    /*取出下划线*/
+    text-decoration: none;
+}
+
+/*设置图片*/
+.content-img img{
+    /*宽度*/
+    width: 120px;
+    /*距离(上下;左右)*/
+    margin: 0 5px;
+    /*设置阴影*/
+    box-shadow: 0px 0px 50px gray;
+    /*设置圆角*/
+    border-radius: 5px;
+}
+
+/*设置图片的位置*/
+.content-img{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/*设置图片的伪类*/
+.content-img img:hover{
+    /*不透明度*/
+    opacity: 0.5;
+}
+
+/*设置尾部*/
+#footer{
+    /*定位(相对浏览器定位)*/
+    position: fixed;
+    /*离底部的距离*/
+    bottom: 0px;
+    /*宽度*/
+    width: 100%;
+    /*内边距*/
+    padding: 50px 0;
+    /*位置*/
+    text-align: center;
+    /*字体*/
+    font-size: 13px;
+}
+
+/*底部的顶端*/
+.footer-top{
+    /*靠近底部之间的间距*/
+    margin-bottom: 8px;
+}
+
+/*底部顶端的文字*/
+.footer-top a{
+    /*间距*/
+    margin: 0% 5px;
+    /*颜色*/
+    color: darkgray;
+}
+
+/*底部的底端*/
+.footer-bottom{
+    /*颜色*/
+    color: darkgray;
+}
+
+/*底部底端的a标签*/
+.footer-bottom a{
+    /*颜色*/
+    color: darkgray;
+}

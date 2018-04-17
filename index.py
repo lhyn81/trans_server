@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, send_file, jsonify, session
-from flaskext.markdown import Markdown
+from markdown import Markdown
 from flask_cors import *
 from model.handlejson import writejson, readjson, queryjson
 import json
@@ -32,7 +32,8 @@ def login():
 def query():
     word=request.args.get("word")
     rlt=queryjson(word)
-    return jsonify(rlt)
+    num=len(rlt)
+    return render_template("result.html",rlt=rlt,word=word,num=num)
 
 
 @app.route('/admin/<method>')
@@ -46,4 +47,4 @@ def admin(method):
 if __name__ == '__main__':
     app.secret_key="19811015"
 
-    app.run(host='0.0.0.0', port=7321, debug=True)
+    app.run(host='0.0.0.0', port=5000,debug=True)
