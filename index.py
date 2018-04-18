@@ -47,4 +47,4 @@ def admin(method):
 if __name__ == '__main__':
     app.secret_key="19811015"
 
-    app.run(host='0.0.0.0', port=5000,debug=True)
+    app.run(host='0.0.0.0', port=80,debug=True)

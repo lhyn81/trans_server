@@ -8,11 +8,39 @@
 	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript"> 
 		function copythis(obj){ 
-		// obj.select(); 
-		// document.execCommand("Copy");
-		alert(obj); 
+			var txt = obj.parentNode.innerText;
+			var textArea = document.createElement("textarea");
+			// Place in top-left corner of screen regardless of scroll position.
+			textArea.style.position = 'fixed';
+			textArea.style.top = 0;
+			textArea.style.left = 0;
+			textArea.style.width = '0';
+			textArea.style.height = '0';
+			textArea.style.padding = 0;
+			textArea.style.border = 'none';
+			textArea.style.outline = 'none';
+			textArea.style.boxShadow = 'none';
+			textArea.style.background = 'transparent';
+			textArea.value = txt;
+			document.body.appendChild(textArea);
+			textArea.select();
+			// var ele=obj.parentNode;
+			// ele.focus();
+			// ele.select();
+			// js=obj.createTextRange();  
+			// js.execCommand("Copy") 
+			// ele.select()
+			// window.clipboardData.setData("Text",ele.innerText); 
+			document.execCommand('copy');
+			// textArea.remove();
+			// alert(ele.innerText); 
 		} 
 	</script> 
+
+	<style>
+		.btn { display: inline-block; width: 1cm; height: 0.6cm; color: #5B5B5B; text-align: center;  font-size: 12px; float:right; padding: 0px }
+	</style>
+
 </head>
 <body style="background-color: #E2E4E7">
 
@@ -25,24 +53,35 @@
 			<tbody>
 				<tr>
 				<td style="width:1.5cm;font-size: 15px">中文</td>
-				<td style="text-align:left; font-size: 15px ">{{ item['中文'] }}</td>
+				<td style="text-align:left; font-size: 15px ">{{ item['中文'] }}
+					<input onclick="copythis(this)" type="button" value="COPY" class="btn"/>
+				</td>
 				</tr>
 				<tr>
 				<td style="width:1.5cm;font-size: 15px">拼音</td>
-				<td style="text-align:left; font-size: 15px ">{{ item['汉语拼音'] }}</td>
+				<td style="text-align:left; font-size: 15px ">{{ item['汉语拼音'] }}
+					<input onclick="copythis(this)" type="button" value="COPY" class="btn"/>
+				</td>
 				</tr>
 				<tr>
 				<td style="width:1.5cm;font-size: 15px">法文</td>
-				<td style="text-align:left; font-size: 15px ">{{ item['法文'] }}</td>
+				<td style="text-align:left; font-size: 15px ">{{ item['法文'] }}
+					<input onclick="copythis(this)" type="button" value="COPY" class="btn"/>
+				</td>
 				</tr>
 				<tr>
 				<td style="width:1.5cm;font-size: 15px">藏文</td>
-				<td style="text-align:left; font-size: 15px ">{{ item['藏文'] }}</td>
+				<td style="text-align:left; font-size: 15px ">{{ item['藏文'] }}
+					<input onclick="copythis(this)" type="button" value="COPY" class="btn"/>
+				</td>
 				</tr>
 				<tr>
 				<td style="width:1.5cm;font-size: 15px">参考</td>
-				<td style="text-align:left; font-size: 15px ">{{ item['参考'] }}</td>
-				</tr>			</tbody>
+				<td style="text-align:left; font-size: 15px ">{{ item['参考'] }}
+					<input onclick="copythis(this)" type="button" value="COPY" class="btn"/>
+				</td>
+				</tr>
+			</tbody>
 		</table>
 	</div>
 {% endfor %}
