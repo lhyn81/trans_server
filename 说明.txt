@@ -1,4 +1,0 @@
-佛法翻译网页端
-index.html
-还有APP的服务端
-index.py

@@ -10,7 +10,6 @@
 		function copythis(obj){ 
 			var txt = obj.parentNode.innerText;
 			var textArea = document.createElement("textarea");
-			// Place in top-left corner of screen regardless of scroll position.
 			textArea.style.position = 'fixed';
 			textArea.style.top = 0;
 			textArea.style.left = 0;
@@ -24,16 +23,7 @@
 			textArea.value = txt;
 			document.body.appendChild(textArea);
 			textArea.select();
-			// var ele=obj.parentNode;
-			// ele.focus();
-			// ele.select();
-			// js=obj.createTextRange();  
-			// js.execCommand("Copy") 
-			// ele.select()
-			// window.clipboardData.setData("Text",ele.innerText); 
 			document.execCommand('copy');
-			// textArea.remove();
-			// alert(ele.innerText); 
 		} 
 	</script> 
 
@@ -45,6 +35,8 @@
 <body style="background-color: #E2E4E7">
 
 <div style="margin: 10px auto; width:60%;">
+	<p>提示：点击释义右侧的COPY可复制本词条（谷歌浏览器无效）。</p>
+	<hr style="background-color: #8E8E8E; height: 1px; border: none" >
 	<h2>有{{ num }}个词语包含“{{ word }}”</h2>
 {% for item in rlt %}
 	<div class="alert alert-info">

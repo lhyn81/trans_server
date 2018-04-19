@@ -34,16 +34,17 @@ def queryjson(qword):
     words=readjson()
     rlt=[]
     word=qword.strip()
+    word=word.lower()
     for i,val in enumerate(words["data"]):
         if word in val["中文"]:
             rlt.append(val)
-        elif word in val["法文"]:
+        elif word in val["法文"].lower():
             rlt.append(val)
-        elif word in val["藏文"]:
+        elif word in val["藏文"].lower():
             rlt.append(val)
-        elif word in val["汉语拼音"]:
+        elif word in val["汉语拼音"].lower():
             rlt.append(val)
-        elif word in val["梵文"]:
+        elif word in val["梵文"].lower():
             rlt.append(val)
     return rlt
         # elif word==val["巴利文"]:

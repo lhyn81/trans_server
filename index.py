@@ -40,11 +40,11 @@ def query():
 def admin(method):
     if method=='restart':
         writejson()
-        return 'dict restarted!'
+        return '词库已重置!'
 
 #--------------------主程序---------------------------
 
 if __name__ == '__main__':
     app.secret_key="19811015"
 
-    app.run(host='0.0.0.0', port=80,debug=True)
+    app.run(host='0.0.0.0', port=80, debug=True)
