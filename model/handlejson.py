@@ -6,6 +6,7 @@ from flask_cors import *
 import json
 import xlrd
 
+
 def writejson():
     workbook = xlrd.open_workbook("model\\dict.xlsx")
     worksheet = workbook.sheet_by_name("Sheet1")
@@ -19,23 +20,23 @@ def writejson():
             row_data[keys[col_number]] = cell.value
         data.append(row_data)
 
-    with open("model\\dict.json",'w') as json_file:
+    with open("model\\dict.json", 'w') as json_file:
         json_file.write(json.dumps({'data': data}))
 
 
 def readjson():
-    with open("model\\dict.json",'rb') as modjs:
+    with open("model\\dict.json", 'rb') as modjs:
         words = json.load(modjs)
     return words
 
 
 def queryjson(qword):
     # readxls()
-    words=readjson()
-    rlt=[]
-    word=qword.strip()
-    word=word.lower()
-    for i,val in enumerate(words["data"]):
+    words = readjson()
+    rlt = []
+    word = qword.strip()
+    word = word.lower()
+    for i, val in enumerate(words["data"]):
         if word in val["中文"]:
             rlt.append(val)
         elif word in val["法文"].lower():
@@ -46,27 +47,31 @@ def queryjson(qword):
             rlt.append(val)
         elif word in val["梵文"].lower():
             rlt.append(val)
+        elif word in val["巴利文"].lower():
+            rlt.append(val)
+        elif word in val["日文"].lower():
+            rlt.append(val)
     return rlt
-        # elif word==val["巴利文"]:
-        #     rlt="巴利文"
-        # elif word==val["日文"]:
-        #     rlt="日文"
-        # elif word==val["韩文"]:
-        #     rlt="fr"
-        # elif word==val["英文"]:
-        #     rlt="fr"
-        # elif word==val["德文"]:
-        #     rlt="fr"
-        # elif word==val["俄文"]:
-        #     rlt="fr"
-        # elif word==val["西班牙语"]:
-        #     rlt="fr"
-        # elif word==val["泰语"]:
-        #     rlt="fr"
-        # elif word==val["葡萄牙语"]:
-        #     rlt="fr"        
-        # elif word==val["荷兰语"]:
-        #     rlt="fr"   
-        # elif word==val["越南语"]:
-        #     rlt="fr"  
+    # elif word==val["巴利文"]:
+    #     rlt="巴利文"
+    # elif word==val["日文"]:
+    #     rlt="日文"
+    # elif word==val["韩文"]:
+    #     rlt="fr"
+    # elif word==val["英文"]:
+    #     rlt="fr"
+    # elif word==val["德文"]:
+    #     rlt="fr"
+    # elif word==val["俄文"]:
+    #     rlt="fr"
+    # elif word==val["西班牙语"]:
+    #     rlt="fr"
+    # elif word==val["泰语"]:
+    #     rlt="fr"
+    # elif word==val["葡萄牙语"]:
+    #     rlt="fr"
+    # elif word==val["荷兰语"]:
+    #     rlt="fr"
+    # elif word==val["越南语"]:
+    #     rlt="fr"
 # print(query("达"))
